@@ -72,12 +72,34 @@ button{font:inherit;font-weight:500;min-height:46px;padding:8px 22px;border-radi
 section{animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){section{animation:none}}
+.box{border:1px solid var(--line);border-top:2px solid var(--hair);background:var(--card);padding:clamp(16px,2.5vw,24px);margin-bottom:36px}
+.box>h2:first-child{margin-top:0}
+.g0{--rowbg:light-dark(#f6f6f4,#122019)}.g1{--rowbg:light-dark(#eeeeeb,#15251c)}.g2{--rowbg:light-dark(#f3f2ef,#112019)}.g3{--rowbg:light-dark(#e9eae7,#18281f)}.g4{--rowbg:light-dark(#f0efeb,#14231b)}.g5{--rowbg:light-dark(#e6e7e4,#1a2a21)}
+.mtab{border-collapse:separate;border-spacing:0 8px}
+.mtab tbody td{background:var(--rowbg);border-top:1px solid light-dark(#d4d5d0,#2a3d31);border-bottom:1px solid light-dark(#d4d5d0,#2a3d31)}
+.mtab tbody td:first-child{border-left:1px solid light-dark(#d4d5d0,#2a3d31)}.mtab tbody td:last-child{border-right:1px solid light-dark(#d4d5d0,#2a3d31)}
+.mtab tbody tr.tot td{background:transparent;border-left:0;border-right:0}
+.nm-behind{color:var(--mag);font-weight:600;animation:blink 1.1s ease-in-out infinite}
+.nm-ok{color:var(--ok);font-weight:600}
+@keyframes blink{50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.nm-behind{animation:none;text-decoration:underline}}
+.dl{margin-top:14px;background:transparent;color:var(--ink);border:1px solid var(--hair);font-size:14px}
+.dl:hover{background:var(--green);color:#fbf8ef}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{background:var(--card);color:var(--ink);border:1px solid var(--line);min-height:44px;padding:8px 16px;font-weight:500}
+.chip.ok{color:var(--ok);border-color:light-dark(#b9d4c3,#2e5a40)}
+.chip.behind{color:var(--mag);border-color:light-dark(#e2b3bb,#7a3a45);background:light-dark(#fbf1f2,#2a1519)}
+.chip[aria-pressed=true]{background:var(--green);color:#fbf8ef;border-color:var(--green)}
+.chip.behind[aria-pressed=true]{background:var(--mag);border-color:var(--mag);color:#fff}
+.loan.behind{border-top-color:var(--mag);background:light-dark(#fffafa,#170f11)}
+.loan.behind h3{color:var(--mag)}
+.mlab span b{font-weight:400}
 section[hidden],nav[hidden]{display:none}
 #gate{max-width:430px;margin:32px auto;text-align:center;background:var(--card);border:1px solid var(--line);border-top:2px solid var(--hair);padding:36px 30px}
 #gate svg{width:84px;height:auto;margin-bottom:12px}
 #gate h2::after{margin-inline:auto}
 pre,.scroll{overflow-x:auto}
-@media(max-width:600px){.route{grid-template-columns:6.5em minmax(0,1fr) 6.5em;font-size:14px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:12px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;white-space:normal;color:var(--gold);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}.stack td:empty{display:none}.stack tr.tot{border-top:1px solid var(--hair);border-bottom:3px double var(--hair)}.mlab span:nth-child(even){visibility:hidden}}
+@media(max-width:600px){.route{grid-template-columns:6.5em minmax(0,1fr) 6.5em;font-size:14px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:12px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;white-space:normal;color:var(--gold);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}.stack td:empty{display:none}.stack tr.tot{border-top:1px solid var(--hair);border-bottom:3px double var(--hair)}.mlab span{font-size:10px}.mtab{border-spacing:0}.mtab tbody tr{border:1px solid light-dark(#d4d5d0,#2a3d31);background:var(--rowbg);padding:12px 14px;margin-bottom:8px}.mtab tbody td{border:0;background:transparent}.scroll th,.scroll td{padding:9px 7px}.mtab tbody tr.tot{background:transparent;border-width:1px 0 3px;border-style:solid double;border-color:var(--hair)}}
 </style><script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script></head><body>
 <header class="band"><div class="wrap">
 <div class="top"><div class="brand"><svg viewBox="0 0 240 240" role="img" aria-label="Pennyvale Electrosoft crest"><path d="M120 12 L208 40 V112 C208 170 170 206 120 228 C70 206 32 170 32 112 V40 Z" fill="#0E4D2C" stroke="#D4B266" stroke-width="5" stroke-linejoin="round"/><path d="M120 26 L194 50 V112 C194 160 162 192 120 212 C78 192 46 160 46 112 V50 Z" fill="none" stroke="#C8A13A" stroke-width="3"/><text x="102" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="104" fill="#FFFFFF">P</text><text x="142" y="166" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="84" fill="#C8A13A">E</text><path d="M74 186 H166" stroke="#C8A13A" stroke-width="3"/></svg><div><div class="co">PENNYVALE ELECTROSOFT LTD</div><h1>Quick Cash statement</h1></div></div>
@@ -96,30 +118,29 @@ pre,.scroll{overflow-x:auto}
 <div id="app" hidden>
 <section id="p-summary">
 <div class="kpis" id="kpis"></div>
-<h2>Where each member stands</h2>
+<div class="box"><h2>Where each member stands</h2>
 <div class="legend"><span><i class="c-paid"></i>Repaid</span><span><i class="c-due"></i>Not yet due</span><span><i class="c-arr"></i>Overdue</span><span><i class="c-pen"></i>Penalties</span></div>
-<div id="routes"></div>
-<h2 style="margin-top:32px">Loans summary by member</h2>
-<table class="stack"><thead><tr><th>Member</th><th>Issued</th><th>Repayable</th><th>Paid</th><th>Outstanding</th><th>Overdue</th><th>Months behind</th><th>Interest earned</th><th>Status</th></tr></thead><tbody id="sumtb"></tbody></table>
-<p class="note">Overdue = instalments due up to the last completed month minus what has been paid (penalties shown separately). Payments are due by the last day of each month.</p>
+<div id="routes"></div></div>
+<div class="box"><h2>Loans summary by member</h2>
+<div><table class="stack mtab"><thead><tr><th>Member</th><th>Issued</th><th>Repayable</th><th>Paid</th><th>Outstanding</th><th>Overdue</th><th>Months behind</th><th>Interest earned</th><th>Status</th></tr></thead><tbody id="sumtb"></tbody></table></div>
+<p class="note">Overdue = instalments due up to the last completed month minus what has been paid (penalties shown separately). Payments are due by the last day of each month.</p></div>
 </section>
 
 <section id="p-member" hidden>
-<label for="who" style="font-weight:600;display:block;margin-bottom:6px">Choose a member</label>
-<select id="who"></select>
+<div class="chips" id="who" role="group" aria-label="Choose a member"></div>
 <div id="loans" style="margin-top:20px"></div>
 </section>
 
 <section id="p-interest" hidden>
-<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px"><label for="yr" style="font-weight:600">Year</label><select id="yr"></select></div>
-<div class="kpis" id="ikpis"></div>
+<div class="box"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px"><label for="yr" style="font-weight:600">Year</label><select id="yr"></select></div>
+<div class="kpis" id="ikpis" style="margin-bottom:0"></div></div>
 <div class="grid2">
-<div><h2>Interest earned by month</h2><div class="legend"><span><i class="c-paid"></i>Interest from instalments</span><span><i class="c-pen"></i>Penalties collected</span></div><div class="cols" id="cols"></div><div class="mlab" id="mlab"></div></div>
-<div><h2>By loan</h2><table class="stack"><thead><tr><th>Loan</th><th>Collected</th><th>Interest</th><th>Penalties</th><th>Total earned</th></tr></thead><tbody id="bytb"></tbody></table></div>
+<div class="box" style="margin-bottom:0"><h2>Interest earned by month</h2><div class="legend"><span><i class="c-paid"></i>Interest from instalments</span><span><i class="c-pen"></i>Penalties collected</span></div><div class="cols" id="cols"></div><div class="mlab" id="mlab"></div></div>
+<div class="box" style="margin-bottom:0"><h2>By loan</h2><div class="scroll"><table><thead><tr><th>Loan</th><th>Collected</th><th>Interest</th><th>Penalties</th><th>Total earned</th></tr></thead><tbody id="bytb"></tbody></table></div></div>
 </div>
-<h2 style="margin-top:32px">Each shareholder's earnings</h2>
+<div class="box" style="margin-top:36px"><h2>Each shareholder's earnings</h2>
 <p class="note" style="margin-top:0">Each shareholder's part of the interest and penalties earned in the chosen year, in proportion to shares held.</p>
-<table class="stack"><thead><tr><th>Shareholder</th><th>Shares</th><th>Share %</th><th>Earned</th></tr></thead><tbody id="shtb"></tbody></table>
+<div class="scroll"><table><thead><tr><th>Shareholder</th><th>Shareholding</th><th>Share %</th><th>Earned</th></tr></thead><tbody id="shtb"></tbody></table></div></div>
 <p class="note">Interest earned is counted when cash comes in: each payment first clears any penalty owed (penalty = income), and the rest is split between principal and interest in the loan's own ratio (e.g. 15% interest loan → 13.0% of each payment is interest).</p>
 </section>
 </div></div></main>
@@ -191,19 +212,23 @@ const byP=people.map(n=>{const ls=C.filter(c=>c.name===n);const s=k=>ls.reduce((
   const seg=(v,c)=>v>0?`<i class="${c}" style="width:${v/max*100}%"></i>`:'';
   return `<div class="route"><span class="nm">${p.n}</span><div class="bar" role="img" aria-label="${p.n}: repaid ${K(p.paid)}, overdue ${K(p.over)}">${seg(p.paid,'c-paid')}${seg(p.over,'c-arr')}${seg(Math.min(p.pen,p.out),'c-pen')}${seg(due,'c-due')}</div><span class="v">${p.out?K(p.out):'Cleared'}</span></div>`}).join('');
  const s=k=>byP.reduce((a,p)=>a+p[k],0);
- document.getElementById('sumtb').innerHTML=byP.map(p=>`<tr><td><a href="#member" data-who="${p.n}">${p.n}</a> <span style="color:var(--mute)">(${p.ls.map(l=>'#'+l.no).join(', ')})</span></td><td>${K(p.P)}</td><td>${K(p.T)}</td><td>${K(p.paid)}</td><td>${K(p.out)}</td><td>${p.over?K(p.over):'–'}</td><td>${p.behind>=0.05?p.behind.toFixed(1):'–'}</td><td>${K(p.int)}</td><td>${tag(p.st)}</td></tr>`).join('')
+ document.getElementById('sumtb').innerHTML=byP.map((p,i)=>`<tr class="g${i%6}"><td><a href="#member" data-who="${p.n}" class="${p.st==='behind'?'nm-behind':'nm-ok'}">${p.n}</a> <span style="color:var(--mute)">(${p.ls.map(l=>'#'+l.no).join(', ')})</span></td><td>${K(p.P)}</td><td>${K(p.T)}</td><td>${K(p.paid)}</td><td>${K(p.out)}</td><td>${p.over?K(p.over):'–'}</td><td>${p.behind>=0.05?p.behind.toFixed(1):'–'}</td><td>${K(p.int)}</td><td>${tag(p.st)}</td></tr>`).join('')
  +`<tr class="tot"><td>Total</td><td>${K(s('P'))}</td><td>${K(s('T'))}</td><td>${K(s('paid'))}</td><td>${K(s('out'))}</td><td>${K(s('over'))}</td><td></td><td>${K(s('int'))}</td><td></td></tr>`;
 }
 
 // ---- PAGE 2 ----
 const who=document.getElementById('who');
-who.innerHTML=byP.map(p=>`<option>${p.n}</option>`).join('');
+let curWho=(byP.find(p=>p.st==='behind')||byP[0]).n;
+function chips(){who.innerHTML=byP.map(p=>`<button type="button" class="chip ${p.st==='behind'?'behind':'ok'}" data-n="${p.n}" aria-pressed="${p.n===curWho}">${p.n}</button>`).join('')}
+who.addEventListener('click',e=>{const b=e.target.closest('button[data-n]');if(b){curWho=b.dataset.n;showWho()}});
 function showWho(){
- const ls=C.filter(c=>c.name===who.value);
+ chips();
+ const ls=C.filter(c=>c.name===curWho);
  document.getElementById('loans').innerHTML=ls.map(c=>{
   const pct=Math.min(100,c.paid/(c.T+c.pen)*100), epct=Math.min(100,c.req/c.T*100);
-  return `<div class="loan"><h3>${c.name} · Loan #${c.no} ${tag(c.status)}</h3>
+  return `<div class="loan ${c.status==="behind"?"behind":""}"><h3>${c.name} · Loan #${c.no} ${tag(c.status)}</h3>
   <div class="sub">Sheet #${c.sheet} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months at ${(c.I/c.P*100).toFixed(0)}% total interest · last instalment ${c.endM}</div>
+  <button type="button" class="dl" data-loan="${c.id}">Download statement (PDF)</button>
   <div class="facts">
    <div>Advanced<b>${K(c.P)}</b></div><div>Principal + interest<b>${K(c.T)}</b></div><div>Monthly instalment<b>${K(c.inst)}</b></div>
    <div>Paid so far<b>${K(c.paid)}</b></div><div>Penalties<b>${K(c.pen)}</b></div><div>Outstanding<b>${K(c.out)}</b></div>
@@ -211,12 +236,59 @@ function showWho(){
    <div>Months ${c.over>=0?'behind':'ahead'}<b>${(Math.abs(c.over)/c.inst).toFixed(1)}</b></div><div>Interest earned<b>${K(c.intEarned)}</b></div>
   </div>
   <div class="bar" style="height:12px;position:relative" role="img" aria-label="${pct.toFixed(0)}% repaid against ${epct.toFixed(0)}% due"><i class="c-paid" style="width:${pct}%"></i><span style="position:absolute;left:${epct}%;top:-4px;bottom:-4px;width:3px;background:var(--mag)"></span></div>
-  <p class="note" style="margin-top:6px">${pct.toFixed(0)}% repaid · magenta line = ${epct.toFixed(0)}% that should be repaid by now</p>
+  <p class="note" style="margin-top:6px">${pct.toFixed(0)}% repaid · red line = ${epct.toFixed(0)}% that should be repaid by now</p>
   <div class="scroll"><table><thead><tr><th>Month</th><th>Required</th><th>Paid</th><th>Penalty</th><th>Actual balance</th><th>Expected balance</th></tr></thead><tbody>
   ${c.rows.map(r=>`<tr style="${r.future?'color:var(--mute)':''}"><td>${ml(r.m)}</td><td>${r.due?K(r.due):''}</td><td>${r.p?K(r.p):(r.future||!r.due?'':'<span style="color:var(--mag)">–</span>')}</td><td>${r.pn?K(r.pn):''}</td><td>${K(Math.max(0,r.bal))}</td><td>${K(r.exp)}</td></tr>`).join('')}
   <tr class="tot"><td>Total</td><td>${K(c.T)}</td><td>${K(c.paid)}</td><td>${K(c.pen)}</td><td></td><td></td></tr></tbody></table></div></div>`}).join('');
 }
-who.onchange=showWho;
+
+// ---- PDF STATEMENT ----
+const loadJs=src=>new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)});
+let libs=null;
+const getLibs=()=>libs||(libs=loadJs('vendor/jspdf.umd.min.js').then(()=>loadJs('vendor/jspdf.plugin.autotable.min.js')).then(()=>fetch('vendor/crest.png')).then(r=>r.blob()).then(b=>new Promise(ok=>{const f=new FileReader();f.onload=()=>ok(f.result);f.readAsDataURL(b)})));
+async function statement(c,btn){
+ const old=btn.textContent;btn.textContent='Preparing PDF…';btn.disabled=true;
+ try{
+ const crest=await getLibs();
+ const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
+ const W=210,GR=[14,59,38],GD=[184,149,74],INK=[22,35,27],MU=[93,106,97],RED=[142,44,58];
+ const asOf=`${now.getDate()} ${MN[now.getMonth()]} ${now.getFullYear()}`;
+ doc.setFillColor(...GR);doc.rect(0,0,W,34,'F');doc.setFillColor(...GD);doc.rect(0,34,W,0.8,'F');
+ doc.addImage(crest,'PNG',14,6,22,22);
+ doc.setTextColor(...GD);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('PENNYVALE ELECTROSOFT LTD',41,13,{charSpace:0.8});
+ doc.setTextColor(255,255,255);doc.setFont('times','bold');doc.setFontSize(20);doc.text('Quick Cash loan statement',41,23);
+ doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(210,220,212);doc.text(`As at ${asOf}`,W-14,13,{align:'right'});doc.text(`Instalments due to end of ${MN[(lastDue%12+12)%12]} ${Math.floor(lastDue/12)}`,W-14,18,{align:'right'});doc.text('Amounts in KES',W-14,23,{align:'right'});
+ let y=48;
+ doc.setTextColor(...INK);doc.setFont('times','bold');doc.setFontSize(17);doc.text(`${c.name}  ·  Loan #${c.no}`,14,y);
+ const st={behind:'Behind',ok:'On track',ahead:'Ahead',done:'Paid off'}[c.status];
+ doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...(c.status==='behind'?RED:c.status==='ok'?MU:[46,107,71]));doc.text(st.toUpperCase(),W-14,y,{align:'right'});
+ y+=6;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...MU);
+ doc.text(`Sheet #${c.sheet}  ·  issued ${c.date.split('-').reverse().join('/')}  ·  ${c.n} months  ·  ${(c.I/c.P*100).toFixed(0)}% total interest  ·  last instalment ${c.endM}`,14,y);
+ y+=6;
+ const f=[['Advanced',K(c.P)],['Principal + interest',K(c.T)],['Monthly instalment',K(c.inst)],['Paid so far',K(c.paid)],['Penalties charged',K(c.pen)],['Outstanding',K(c.out)],[c.over>=0?'Overdue':'Paid ahead',K(Math.abs(c.over))],[`Months ${c.over>=0?'behind':'ahead'}`,(Math.abs(c.over)/c.inst).toFixed(1)],['Interest earned by pool',K(c.intEarned)]];
+ const rows=[];for(let i=0;i<f.length;i+=3)rows.push(f.slice(i,i+3).flat());
+ doc.autoTable({startY:y,body:rows,theme:'plain',styles:{fontSize:9,cellPadding:{top:2.2,bottom:2.2,left:2,right:2},textColor:INK},
+  columnStyles:{0:{textColor:MU},1:{fontStyle:'bold',halign:'right'},2:{textColor:MU},3:{fontStyle:'bold',halign:'right'},4:{textColor:MU},5:{fontStyle:'bold',halign:'right'}},
+  didParseCell:d=>{if(d.section==='body'&&d.row.index===2&&d.column.index===1&&c.over>0)d.cell.styles.textColor=RED},
+  tableLineColor:[227,223,211],tableLineWidth:0.2,margin:{left:14,right:14}});
+ y=doc.lastAutoTable.finalY+8;
+ doc.setFont('times','bold');doc.setFontSize(13);doc.setTextColor(...INK);doc.text('Repayment history',14,y);doc.setFillColor(...GD);doc.rect(14,y+2,14,0.4,'F');
+ const body=c.rows.map(r=>[ml(r.m),r.due?K(r.due):'',r.p?K(r.p):(r.future||!r.due?'':'–'),r.pn?K(r.pn):'',K(Math.max(0,r.bal)),K(r.exp)]);
+ body.push(['Total',K(c.T),K(c.paid),K(c.pen),'','']);
+ doc.autoTable({startY:y+5,head:[['Month','Required','Paid','Penalty','Actual balance','Expected balance']],body,theme:'striped',
+  headStyles:{fillColor:GR,textColor:255,fontSize:8.5,halign:'right'},styles:{fontSize:8.5,halign:'right',cellPadding:1.8},
+  alternateRowStyles:{fillColor:[246,246,244]},columnStyles:{0:{halign:'left'}},
+  didParseCell:d=>{if(d.section==='head'&&d.column.index===0)d.cell.styles.halign='left';
+   if(d.section==='body'){const r=c.rows[d.row.index];if(!r){d.cell.styles.fontStyle='bold';d.cell.styles.fillColor=[236,231,218]}else{if(r.future)d.cell.styles.textColor=[150,158,152];if(d.column.index===2&&!r.p&&r.due&&!r.future)d.cell.styles.textColor=RED;if(d.column.index===3&&r.pn)d.cell.styles.textColor=RED}}},
+  margin:{left:14,right:14,bottom:18}});
+ const n=doc.getNumberOfPages();
+ for(let i=1;i<=n;i++){doc.setPage(i);doc.setDrawColor(...GD);doc.setLineWidth(0.3);doc.line(14,284,W-14,284);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...MU);
+  doc.text('Pennyvale Electrosoft Ltd · P.O. Box 996 – 00100 GPO, Nairobi · Payments are due by the last day of each month.',14,289);doc.text(`Page ${i} of ${n}`,W-14,289,{align:'right'});}
+ doc.save(`Quick-Cash-statement-${c.name}-loan${c.no}-${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}.pdf`);
+ }catch(e){alert('Could not create the PDF. Please check your connection and try again.')}
+ finally{btn.textContent=old;btn.disabled=false}
+}
+document.getElementById('loans').addEventListener('click',e=>{const b=e.target.closest('button.dl');if(b)statement(C.find(c=>c.id===b.dataset.loan),b)});
 
 // ---- PAGE 3 ----
 const years=[...new Set(C.flatMap(c=>c.earn.map(e=>+e.m.slice(0,4))))].sort((a,b)=>b-a);
@@ -229,12 +301,12 @@ function showYear(){
  const sum=k=>E.reduce((a,e)=>a+e[k],0);
  yearTotal=sum('int')+sum('pen');
  document.getElementById('ikpis').innerHTML=[[K(sum('pay')),`Collected in ${y}`],[K(sum('int')),'Interest from instalments'],[K(sum('pen')),'Penalties collected'],[K(yearTotal),`Total earned in ${y}`]]
-  .map(([b,s],i)=>`<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+  .concat(SH.length?[[K(SH.reduce((a,x)=>a+(+x[1]),0)),'Total shareholding']]:[]).map(([b,s],i)=>`<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
  const mon=MN.map((_,i)=>{const k=`${y}-${String(i+1).padStart(2,'0')}`;const es=E.filter(e=>e.m===k);return{i:es.reduce((a,e)=>a+e.int,0),p:es.reduce((a,e)=>a+e.pen,0)}});
  const mx=Math.max(1,...mon.map(m=>m.i+m.p));
  document.getElementById('cols').innerHTML=mon.map(m=>`<div>${m.i+m.p?`<em style="top:${(1-(m.i+m.p)/mx)*100-12}%">${K((m.i+m.p)/1000)}k</em>`:''}<i class="p" style="height:${m.p/mx*100}%"></i><i style="height:${m.i/mx*100}%"></i></div>`).join('');
  document.querySelectorAll('#cols i.p').forEach(el=>{el.parentNode.insertBefore(el,null)}); // penalties sit at the base
- document.getElementById('mlab').innerHTML=MN.map(m=>`<span>${m[0]}</span>`).join('');
+ document.getElementById('mlab').innerHTML=MN.map(m=>`<span>${m}</span>`).join('');
  const by=C.map(c=>{const es=E.filter(e=>e.c===c);return{c,pay:es.reduce((a,e)=>a+e.pay,0),i:es.reduce((a,e)=>a+e.int,0),p:es.reduce((a,e)=>a+e.pen,0)}}).filter(x=>x.pay);
  document.getElementById('bytb').innerHTML=by.map(x=>`<tr><td>${x.c.name} #${x.c.no}</td><td>${K(x.pay)}</td><td>${K(x.i)}</td><td>${x.p?K(x.p):'–'}</td><td><b>${K(x.i+x.p)}</b></td></tr>`).join('')
   +`<tr class="tot"><td>Total</td><td>${K(sum('pay'))}</td><td>${K(sum('int'))}</td><td>${K(sum('pen'))}</td><td>${K(yearTotal)}</td></tr>`;
@@ -250,7 +322,7 @@ function showShares(){
 yrSel.onchange=showYear;
 
 // ---- ROUTING ----
-document.addEventListener('click',e=>{const a=e.target.closest('a[data-who]');if(a){who.value=a.dataset.who;showWho()}});
+document.addEventListener('click',e=>{const a=e.target.closest('a[data-who]');if(a){curWho=a.dataset.who;showWho()}});
 function route(){const p=['summary','member','interest'].includes(location.hash.slice(1))?location.hash.slice(1):'summary';
  for(const s of ['summary','member','interest'])document.getElementById('p-'+s).hidden=s!==p;
  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.p===p));}
