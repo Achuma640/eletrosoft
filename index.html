@@ -2,82 +2,97 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Pennyvale Electrosoft · Quick Cash</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* VOICE: a treasurer's ledger — calm, exact, numbers first.
-   IDEA: a survey map of the pool — each member a route, arrears marked in magenta.
-   PICTURE: per-member route bars: repaid, still on schedule, behind.
-   COLOUR and TYPE: sea #bfe3ee, land #fbfbf2, ink #13242e, magenta #d6127e; Overpass.
-   LAYOUT: legend-style header panel, three pages on hash tabs, tables that stack on phones. */
-:root{color-scheme:light dark;--bg:light-dark(#f8f7f2,#0b1a12);--ink:light-dark(#14261b,#e8efe9);--sea:light-dark(#e2ede5,#12301f);--mute:light-dark(#56665b,#a3b5a8);--line:light-dark(#d8ddd3,#24402f);--mag:light-dark(#c0265e,#ff6b9a);--brown:light-dark(#a07a1c,#e2bd5a);--card:light-dark(#ffffff,#10251a);--ok:light-dark(#1d7a4a,#5fd39a);--gold:light-dark(#a8841f,#d9b24a)}
+/* VOICE: a private-bank statement, quiet and exact.
+   IDEA: the member statement a private bank posts each month, under the house crest.
+   PICTURE: the crest on a deep green masthead; slim repayment bars like a ledger.
+   COLOUR and TYPE: deep green #0E3B26, gold #B8954A hairlines, paper white; Cormorant Garamond titles, Inter figures.
+   LAYOUT: masthead band, gold-underlined tabs, figures in ruled rows, statement tables. */
+:root{color-scheme:light dark;--bg:light-dark(#fbfaf7,#09140e);--ink:light-dark(#16231b,#e9eee9);--mute:light-dark(#5d6a61,#9fb0a5);--line:light-dark(#e3dfd3,#1f3328);--card:light-dark(#ffffff,#0f1f16);--green:#0e3b26;--gold:light-dark(#9a7a35,#d4b266);--hair:light-dark(#c9b07a,#7d6838);--mag:light-dark(#8e2c3a,#ec8a98);--brown:light-dark(#b8954a,#d4b266);--paid:light-dark(#0e3b26,#7fc39b);--due:light-dark(#ece7da,#1d3226);--ok:light-dark(#2e6b47,#7fc39b);--sea:var(--due)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Overpass,system-ui,sans-serif;overflow-x:clip}
-.band{padding:clamp(20px,3.5vw,48px) max(5vw,16px)}
-.wrap{max-width:1240px;margin:0 auto}
-header{background:var(--sea)}
-h1{font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0 0 6px;font-weight:800;text-wrap:balance}
-h2{font-size:22px;margin:0 0 12px;font-weight:800}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 Inter,system-ui,sans-serif;overflow-x:clip;font-variant-numeric:tabular-nums}
+.band{padding:clamp(24px,4vw,56px) max(5vw,18px)}
+.wrap{max-width:1120px;margin:0 auto}
+header.band{background:var(--green);color:#f4efe2;padding-bottom:0;border-bottom:1px solid #b8954a}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.brand{display:flex;align-items:center;gap:18px}
+.brand svg{flex:none;width:clamp(58px,9vw,84px);height:auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25))}
+.co{font:600 12px/1.3 Inter,sans-serif;letter-spacing:.22em;color:#d4b266}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:.005em}
+h1{font-size:clamp(32px,5vw,48px);line-height:1.05;margin:4px 0 0;color:#fbf8ef;text-wrap:balance}
+h2{font-size:26px;margin:0 0 6px;color:var(--ink)}
+h2::after{content:"";display:block;width:44px;height:1px;background:var(--hair);margin-top:8px}
+header .sub{color:#c9d3cb;margin:14px 0 0;font-size:14px}
 .sub{color:var(--mute);margin:0}
-nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-nav a{padding:10px 16px;border-radius:22px;text-decoration:none;color:var(--ink);font-weight:600;border:1.5px solid var(--ink);min-height:44px;display:inline-flex;align-items:center}
-nav a.on{background:var(--ink);color:var(--bg)}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px;margin:0 0 24px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.kpi b{display:block;font-size:clamp(22px,3vw,30px);font-weight:800;white-space:nowrap}
-.kpi span{color:var(--mute);font-size:14px}
+#theme{background:transparent;border:1px solid rgba(212,178,102,.6);color:#f4efe2;min-height:40px;padding:6px 14px;font-size:13px;border-radius:2px;flex:none}
+nav{display:flex;gap:clamp(14px,4vw,36px);flex-wrap:wrap;margin-top:22px}
+nav a{padding:12px 0 14px;text-decoration:none;color:#c9d3cb;font-size:14.5px;letter-spacing:.03em;border-bottom:2px solid transparent;min-height:44px}
+nav a.on{color:#fff;border-color:#d4b266}
+nav a:hover{color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));margin:0 0 40px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.kpi{padding:20px 22px;border-right:1px solid var(--line)}
+.kpi:last-child{border-right:0}
+.kpi b{display:block;font:600 clamp(30px,4vw,40px)/1.1 'Cormorant Garamond',Georgia,serif;white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
+.kpi span{color:var(--mute);font-size:13px;letter-spacing:.02em}
 .kpi.alert b{color:var(--mag)}
-.route{display:grid;grid-template-columns:9em minmax(0,1fr) 7.5em;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
-.route .nm{font-weight:600}.route .v{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.bar{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--line)}
+@media(max-width:600px){.kpi{border-right:0;border-bottom:1px solid var(--line)}.kpi:last-child{border-bottom:0}}
+.route{display:grid;grid-template-columns:9em minmax(0,1fr) 7.5em;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.route .nm{font-weight:500}.route .v{text-align:right;white-space:nowrap}
+.bar{display:flex;height:8px;overflow:hidden;background:var(--due)}
 .bar i{display:block;height:100%}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--mute);margin:8px 0 18px}
-.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-.c-paid{background:var(--ink)}
-.brand{display:flex;align-items:center;gap:16px;margin-bottom:10px}.brand svg{flex:none;width:clamp(56px,9vw,76px);height:auto}
-.brand .co{font:700 13px/1.2 Overpass,sans-serif;letter-spacing:.14em;color:var(--gold)}
-.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-#theme{min-height:44px;padding:6px 12px;font-size:14px;white-space:nowrap;flex:none}.c-due{background:var(--sea);outline:1px solid var(--line)}.c-arr{background:var(--mag)}.c-pen{background:var(--brown)}
-table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
-th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
-th{font-size:13px;color:var(--mute);font-weight:600}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin:10px 0 14px}
+.legend i{display:inline-block;width:14px;height:6px;margin-right:7px;vertical-align:2px}
+.c-paid{background:var(--paid)}.c-due{background:var(--due);outline:1px solid var(--line)}.c-arr{background:var(--mag)}.c-pen{background:var(--brown)}
+table{border-collapse:collapse;width:100%}
+th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{font-size:11.5px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--hair)}
 th:first-child,td:first-child{text-align:left}
-tr.tot td{font-weight:800;border-top:2px solid var(--ink)}
-.tag{display:inline-block;padding:2px 9px;border-radius:12px;font-size:13px;font-weight:600}
-.t-behind{background:var(--mag);color:#fff}.t-ok{background:var(--sea);color:var(--ink)}.t-ahead{background:var(--ok);color:#fff}.t-done{background:var(--line);color:var(--ink)}
-.loan{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:20px}
-.loan h3{margin:0 0 4px;font-size:20px}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:10px;margin:12px 0}
-.facts div{font-size:14px;color:var(--mute)}.facts b{display:block;color:var(--ink);font-size:17px;white-space:nowrap}
-select,input{font:inherit;font-size:16px;padding:10px 12px;border-radius:8px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);min-height:44px}
-input.sh{width:7em;text-align:right}input.nmi{width:100%}
-button{font:inherit;font-weight:600;min-height:44px;padding:8px 16px;border-radius:22px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
-:focus-visible{outline:3px solid var(--mag);outline-offset:2px}
-.cols{display:flex;align-items:flex-end;gap:6px;height:200px;padding-top:24px;border-bottom:1.5px solid var(--ink)}
+td a{color:var(--ink);text-decoration-color:var(--hair);text-underline-offset:3px}
+tr.tot td{font-weight:600;border-top:1px solid var(--hair);border-bottom:3px double var(--hair)}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500}
+.tag::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.t-behind{color:var(--mag)}.t-ok{color:var(--mute)}.t-ahead{color:var(--ok)}.t-done{color:var(--gold)}
+.loan{background:var(--card);border:1px solid var(--line);border-top:2px solid var(--hair);padding:22px;margin-bottom:26px}
+.loan h3{margin:0 0 4px;font-size:24px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px 18px;margin:18px 0}
+.facts div{font-size:12.5px;color:var(--mute);letter-spacing:.02em}.facts b{display:block;color:var(--ink);font:600 22px/1.2 'Cormorant Garamond',Georgia,serif;white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
+select,input{font:inherit;font-size:16px;padding:10px 12px;border-radius:2px;border:1px solid var(--hair);background:var(--card);color:var(--ink);min-height:46px}
+button{font:inherit;font-weight:500;min-height:46px;padding:8px 22px;border-radius:2px;border:1px solid var(--green);background:var(--green);color:#fbf8ef;cursor:pointer;letter-spacing:.03em}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.cols{display:flex;align-items:flex-end;gap:8px;height:200px;padding-top:24px;border-bottom:1px solid var(--hair)}
 .cols div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
-.cols i{display:block;width:100%;max-width:46px;background:var(--ink);border-radius:4px 4px 0 0}
-.cols i.p{background:var(--brown);border-radius:0}
-.cols em{font-style:normal;font-size:12px;color:var(--mute);position:absolute;top:-2px;white-space:nowrap}
-.mlab{display:flex;gap:6px}.mlab span{flex:1;text-align:center;font-size:12px;color:var(--mute)}
-.note{font-size:14px;color:var(--mute);margin-top:10px}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:28px}
-section[hidden]{display:none}
+.cols i{display:block;width:100%;max-width:34px;background:var(--paid)}
+.cols i.p{background:var(--brown)}
+.cols em{font-style:normal;font-size:11.5px;color:var(--mute);position:absolute;top:-2px;white-space:nowrap}
+.mlab{display:flex;gap:8px}.mlab span{flex:1;text-align:center;font-size:11.5px;color:var(--mute);padding-top:6px}
+.note{font-size:13px;color:var(--mute);margin-top:12px;max-width:70ch}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px}
+section{animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){section{animation:none}}
+section[hidden],nav[hidden]{display:none}
+#gate{max-width:430px;margin:32px auto;text-align:center;background:var(--card);border:1px solid var(--line);border-top:2px solid var(--hair);padding:36px 30px}
+#gate svg{width:84px;height:auto;margin-bottom:12px}
+#gate h2::after{margin-inline:auto}
 pre,.scroll{overflow-x:auto}
-@media(max-width:600px){.route{grid-template-columns:6.5em minmax(0,1fr) 6.5em;font-size:14px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;white-space:normal;color:var(--mute)}.stack td:empty{display:none}.stack tr.tot{border-top:2px solid var(--ink)}.mlab span:nth-child(even){visibility:hidden}}
+@media(max-width:600px){.route{grid-template-columns:6.5em minmax(0,1fr) 6.5em;font-size:14px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:12px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;white-space:normal;color:var(--gold);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}.stack td:empty{display:none}.stack tr.tot{border-top:1px solid var(--hair);border-bottom:3px double var(--hair)}.mlab span:nth-child(even){visibility:hidden}}
 </style><script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script></head><body>
 <header class="band"><div class="wrap">
-<div class="top"><div class="brand"><svg viewBox="0 0 240 240" role="img" aria-label="Pennyvale Electrosoft crest"><path d="M120 12 L208 40 V112 C208 170 170 206 120 228 C70 206 32 170 32 112 V40 Z" fill="#0E4D2C"/><path d="M120 26 L194 50 V112 C194 160 162 192 120 212 C78 192 46 160 46 112 V50 Z" fill="none" stroke="#C8A13A" stroke-width="3"/><text x="102" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="104" fill="#FFFFFF">P</text><text x="142" y="166" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="84" fill="#C8A13A">E</text><path d="M74 186 H166" stroke="#C8A13A" stroke-width="3"/></svg><div><div class="co">PENNYVALE ELECTROSOFT LTD</div><h1 style="margin:4px 0 0">Quick Cash loans</h1></div></div>
-<button id="theme" type="button" aria-label="Switch light or dark mode">☾ Dark</button></div>
+<div class="top"><div class="brand"><svg viewBox="0 0 240 240" role="img" aria-label="Pennyvale Electrosoft crest"><path d="M120 12 L208 40 V112 C208 170 170 206 120 228 C70 206 32 170 32 112 V40 Z" fill="#0E4D2C" stroke="#D4B266" stroke-width="5" stroke-linejoin="round"/><path d="M120 26 L194 50 V112 C194 160 162 192 120 212 C78 192 46 160 46 112 V50 Z" fill="none" stroke="#C8A13A" stroke-width="3"/><text x="102" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="104" fill="#FFFFFF">P</text><text x="142" y="166" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="84" fill="#C8A13A">E</text><path d="M74 186 H166" stroke="#C8A13A" stroke-width="3"/></svg><div><div class="co">PENNYVALE ELECTROSOFT LTD</div><h1>Quick Cash statement</h1></div></div>
+<button id="theme" type="button" aria-label="Switch light or dark mode">Dark</button></div>
 <p class="sub" id="asof">Loans, repayments and interest earned by the pool.</p>
 <nav id="nav" hidden><a href="#summary" data-p="summary">Summary</a><a href="#member" data-p="member">By member</a><a href="#interest" data-p="interest">Interest &amp; shares</a></nav>
 </div></header>
 
 <main class="band"><div class="wrap">
-<form id="gate" class="loan" style="max-width:420px;margin:24px auto">
-<h2>Members only</h2><p class="sub" style="margin-bottom:14px">Enter the group PIN to see the loans.</p>
-<label for="pin" style="font-weight:600;display:block;margin-bottom:6px">PIN</label>
+<form id="gate">
+<svg viewBox="0 0 240 240" aria-hidden="true"><path d="M120 12 L208 40 V112 C208 170 170 206 120 228 C70 206 32 170 32 112 V40 Z" fill="#0E4D2C" stroke="#D4B266" stroke-width="5" stroke-linejoin="round"/><path d="M120 26 L194 50 V112 C194 160 162 192 120 212 C78 192 46 160 46 112 V50 Z" fill="none" stroke="#C8A13A" stroke-width="3"/><text x="102" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="104" fill="#FFFFFF">P</text><text x="142" y="166" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="84" fill="#C8A13A">E</text><path d="M74 186 H166" stroke="#C8A13A" stroke-width="3"/></svg>
+<h2>Members' access</h2><p class="sub" style="margin:10px 0 20px">Enter the group PIN to view the Quick Cash statement.</p>
+<label for="pin" style="display:block;text-align:left;font-size:13px;color:var(--mute);margin-bottom:6px">PIN</label>
 <div style="display:flex;gap:10px"><input id="pin" type="password" inputmode="numeric" autocomplete="current-password" style="flex:1"><button type="submit">Open</button></div>
-<p id="perr" class="note" style="color:var(--mag);min-height:1.5em"></p></form>
+<p id="perr" class="note" style="color:var(--mag);min-height:1.5em;margin-inline:auto"></p></form>
 <div id="app" hidden>
 <section id="p-summary">
 <div class="kpis" id="kpis"></div>
@@ -188,7 +203,7 @@ function showWho(){
  document.getElementById('loans').innerHTML=ls.map(c=>{
   const pct=Math.min(100,c.paid/(c.T+c.pen)*100), epct=Math.min(100,c.req/c.T*100);
   return `<div class="loan"><h3>${c.name} · Loan #${c.no} ${tag(c.status)}</h3>
-  <div class="sub">Sheet #${c.id.replace(/[ab]$/,'')} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months at ${(c.I/c.P*100).toFixed(0)}% total interest · last instalment ${c.endM}</div>
+  <div class="sub">Sheet #${c.sheet} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months at ${(c.I/c.P*100).toFixed(0)}% total interest · last instalment ${c.endM}</div>
   <div class="facts">
    <div>Advanced<b>${K(c.P)}</b></div><div>Principal + interest<b>${K(c.T)}</b></div><div>Monthly instalment<b>${K(c.inst)}</b></div>
    <div>Paid so far<b>${K(c.paid)}</b></div><div>Penalties<b>${K(c.pen)}</b></div><div>Outstanding<b>${K(c.out)}</b></div>
@@ -247,7 +262,7 @@ showWho();showYear();route();
 const root=document.documentElement,btn=document.getElementById('theme');
 const sysDark=()=>window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches;
 const cur=()=>root.dataset.theme||(sysDark()?'dark':'light');
-const label=()=>{btn.textContent=cur()==='dark'?'☀ Light':'☾ Dark'};
+const label=()=>{btn.textContent=cur()==='dark'?'Light':'Dark'};
 let saved='';try{saved=localStorage.getItem('es-theme')||''}catch(e){}
 if(saved)root.dataset.theme=saved;
 label();
