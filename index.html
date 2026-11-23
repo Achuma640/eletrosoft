@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pennyvale Electrosoft · Quick Cash</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a treasurer's ledger — calm, exact, numbers first.
+   IDEA: a survey map of the pool — each member a route, arrears marked in magenta.
+   PICTURE: per-member route bars: repaid, still on schedule, behind.
+   COLOUR and TYPE: sea #bfe3ee, land #fbfbf2, ink #13242e, magenta #d6127e; Overpass.
+   LAYOUT: legend-style header panel, three pages on hash tabs, tables that stack on phones. */
+:root{color-scheme:light dark;--bg:light-dark(#f8f7f2,#0b1a12);--ink:light-dark(#14261b,#e8efe9);--sea:light-dark(#e2ede5,#12301f);--mute:light-dark(#56665b,#a3b5a8);--line:light-dark(#d8ddd3,#24402f);--mag:light-dark(#c0265e,#ff6b9a);--brown:light-dark(#a07a1c,#e2bd5a);--card:light-dark(#ffffff,#10251a);--ok:light-dark(#1d7a4a,#5fd39a);--gold:light-dark(#a8841f,#d9b24a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Overpass,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(20px,3.5vw,48px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+header{background:var(--sea)}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0 0 6px;font-weight:800;text-wrap:balance}
+h2{font-size:22px;margin:0 0 12px;font-weight:800}
+.sub{color:var(--mute);margin:0}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+nav a{padding:10px 16px;border-radius:22px;text-decoration:none;color:var(--ink);font-weight:600;border:1.5px solid var(--ink);min-height:44px;display:inline-flex;align-items:center}
+nav a.on{background:var(--ink);color:var(--bg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px;margin:0 0 24px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi b{display:block;font-size:clamp(22px,3vw,30px);font-weight:800;white-space:nowrap}
+.kpi span{color:var(--mute);font-size:14px}
+.kpi.alert b{color:var(--mag)}
+.route{display:grid;grid-template-columns:9em minmax(0,1fr) 7.5em;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.route .nm{font-weight:600}.route .v{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--line)}
+.bar i{display:block;height:100%}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--mute);margin:8px 0 18px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.c-paid{background:var(--ink)}
+.brand{display:flex;align-items:center;gap:16px;margin-bottom:10px}.brand svg{flex:none;width:clamp(56px,9vw,76px);height:auto}
+.brand .co{font:700 13px/1.2 Overpass,sans-serif;letter-spacing:.14em;color:var(--gold)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+#theme{min-height:44px;padding:6px 12px;font-size:14px;white-space:nowrap;flex:none}.c-due{background:var(--sea);outline:1px solid var(--line)}.c-arr{background:var(--mag)}.c-pen{background:var(--brown)}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{font-size:13px;color:var(--mute);font-weight:600}
+th:first-child,td:first-child{text-align:left}
+tr.tot td{font-weight:800;border-top:2px solid var(--ink)}
+.tag{display:inline-block;padding:2px 9px;border-radius:12px;font-size:13px;font-weight:600}
+.t-behind{background:var(--mag);color:#fff}.t-ok{background:var(--sea);color:var(--ink)}.t-ahead{background:var(--ok);color:#fff}.t-done{background:var(--line);color:var(--ink)}
+.loan{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:20px}
+.loan h3{margin:0 0 4px;font-size:20px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:10px;margin:12px 0}
+.facts div{font-size:14px;color:var(--mute)}.facts b{display:block;color:var(--ink);font-size:17px;white-space:nowrap}
+select,input{font:inherit;font-size:16px;padding:10px 12px;border-radius:8px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);min-height:44px}
+input.sh{width:7em;text-align:right}input.nmi{width:100%}
+button{font:inherit;font-weight:600;min-height:44px;padding:8px 16px;border-radius:22px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+:focus-visible{outline:3px solid var(--mag);outline-offset:2px}
+.cols{display:flex;align-items:flex-end;gap:6px;height:200px;padding-top:24px;border-bottom:1.5px solid var(--ink)}
+.cols div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+.cols i{display:block;width:100%;max-width:46px;background:var(--ink);border-radius:4px 4px 0 0}
+.cols i.p{background:var(--brown);border-radius:0}
+.cols em{font-style:normal;font-size:12px;color:var(--mute);position:absolute;top:-2px;white-space:nowrap}
+.mlab{display:flex;gap:6px}.mlab span{flex:1;text-align:center;font-size:12px;color:var(--mute)}
+.note{font-size:14px;color:var(--mute);margin-top:10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:28px}
+section[hidden]{display:none}
+pre,.scroll{overflow-x:auto}
+@media(max-width:600px){.route{grid-template-columns:6.5em minmax(0,1fr) 6.5em;font-size:14px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;white-space:normal;color:var(--mute)}.stack td:empty{display:none}.stack tr.tot{border-top:2px solid var(--ink)}.mlab span:nth-child(even){visibility:hidden}}
+</style><script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script></head><body>
+<header class="band"><div class="wrap">
+<div class="top"><div class="brand"><svg viewBox="0 0 240 240" role="img" aria-label="Pennyvale Electrosoft crest"><path d="M120 12 L208 40 V112 C208 170 170 206 120 228 C70 206 32 170 32 112 V40 Z" fill="#0E4D2C"/><path d="M120 26 L194 50 V112 C194 160 162 192 120 212 C78 192 46 160 46 112 V50 Z" fill="none" stroke="#C8A13A" stroke-width="3"/><text x="102" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="104" fill="#FFFFFF">P</text><text x="142" y="166" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="84" fill="#C8A13A">E</text><path d="M74 186 H166" stroke="#C8A13A" stroke-width="3"/></svg><div><div class="co">PENNYVALE ELECTROSOFT LTD</div><h1 style="margin:4px 0 0">Quick Cash loans</h1></div></div>
+<button id="theme" type="button" aria-label="Switch light or dark mode">☾ Dark</button></div>
+<p class="sub" id="asof">Loans, repayments and interest earned by the pool.</p>
+<nav id="nav" hidden><a href="#summary" data-p="summary">Summary</a><a href="#member" data-p="member">By member</a><a href="#interest" data-p="interest">Interest &amp; shares</a></nav>
+</div></header>
+
+<main class="band"><div class="wrap">
+<form id="gate" class="loan" style="max-width:420px;margin:24px auto">
+<h2>Members only</h2><p class="sub" style="margin-bottom:14px">Enter the group PIN to see the loans.</p>
+<label for="pin" style="font-weight:600;display:block;margin-bottom:6px">PIN</label>
+<div style="display:flex;gap:10px"><input id="pin" type="password" inputmode="numeric" autocomplete="current-password" style="flex:1"><button type="submit">Open</button></div>
+<p id="perr" class="note" style="color:var(--mag);min-height:1.5em"></p></form>
+<div id="app" hidden>
+<section id="p-summary">
+<div class="kpis" id="kpis"></div>
+<h2>Where each member stands</h2>
+<div class="legend"><span><i class="c-paid"></i>Repaid</span><span><i class="c-due"></i>Not yet due</span><span><i class="c-arr"></i>Overdue</span><span><i class="c-pen"></i>Penalties</span></div>
+<div id="routes"></div>
+<h2 style="margin-top:32px">Loans summary by member</h2>
+<table class="stack"><thead><tr><th>Member</th><th>Issued</th><th>Repayable</th><th>Paid</th><th>Outstanding</th><th>Overdue</th><th>Months behind</th><th>Interest earned</th><th>Status</th></tr></thead><tbody id="sumtb"></tbody></table>
+<p class="note">Overdue = instalments due up to the last completed month minus what has been paid (penalties shown separately). Payments are due by the last day of each month.</p>
+</section>
+
+<section id="p-member" hidden>
+<label for="who" style="font-weight:600;display:block;margin-bottom:6px">Choose a member</label>
+<select id="who"></select>
+<div id="loans" style="margin-top:20px"></div>
+</section>
+
+<section id="p-interest" hidden>
+<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px"><label for="yr" style="font-weight:600">Year</label><select id="yr"></select></div>
+<div class="kpis" id="ikpis"></div>
+<div class="grid2">
+<div><h2>Interest earned by month</h2><div class="legend"><span><i class="c-paid"></i>Interest from instalments</span><span><i class="c-pen"></i>Penalties collected</span></div><div class="cols" id="cols"></div><div class="mlab" id="mlab"></div></div>
+<div><h2>By loan</h2><table class="stack"><thead><tr><th>Loan</th><th>Collected</th><th>Interest</th><th>Penalties</th><th>Total earned</th></tr></thead><tbody id="bytb"></tbody></table></div>
+</div>
+<h2 style="margin-top:32px">Each shareholder's earnings</h2>
+<p class="note" style="margin-top:0">Each shareholder's part of the interest and penalties earned in the chosen year, in proportion to shares held.</p>
+<table class="stack"><thead><tr><th>Shareholder</th><th>Shares</th><th>Share %</th><th>Earned</th></tr></thead><tbody id="shtb"></tbody></table>
+<p class="note">Interest earned is counted when cash comes in: each payment first clears any penalty owed (penalty = income), and the rest is split between principal and interest in the loan's own ratio (e.g. 15% interest loan → 13.0% of each payment is interest).</p>
+</section>
+</div></div></main>
+
+<script>
+function start(D){
+const LOANS=D.loans;
+// ---- ENGINE ----
+const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const mi=s=>{const[y,m]=s.split('-').map(Number);return y*12+m-1};
+const ms=i=>`${Math.floor(i/12)}-${String(i%12+1).padStart(2,'0')}`;
+const ml=s=>{const i=mi(s);return MN[i%12]+'-'+String(Math.floor(i/12)).slice(2)};
+const K=v=>Math.round(v).toLocaleString('en-KE');
+const now=new Date();const built=D.built||'';
+const curM=now.getFullYear()*12+now.getMonth();
+const lastDue=curM-1; // a month is overdue only after its last day
+document.getElementById('asof').textContent=`As at ${now.getDate()} ${MN[now.getMonth()]} ${now.getFullYear()} · counting instalments due up to end of ${MN[(lastDue%12+12)%12]} ${Math.floor(lastDue/12)} · amounts in KES${built?' · updated '+built:''}`;
+
+function calc(L){
+ const T=L.P+L.I, inst=Math.round(T/L.n), f=mi(L.first), r=L.I/T;
+ const end=Math.max(f+L.n-1,curM,...Object.keys(L.pay).map(mi));
+ let bal=T,paid=0,pen=0,penOwed=0,rows=[],earn=[];
+ for(let i=f;i<=Math.min(end,Math.max(f+L.n-1,curM));i++){
+  const k=ms(i),p=L.pay[k]||0,pn=L.pen[k]||0;
+  pen+=pn;penOwed+=pn;paid+=p;bal=bal+pn-p;
+  if(p){const toPen=Math.min(p,penOwed);penOwed-=toPen;const rest=p-toPen;earn.push({m:k,pay:p,pen:toPen,int:rest*r})}
+  const idx=i-f+1;
+  rows.push({m:k,due:idx<=L.n?inst:0,p,pn,bal,exp:Math.max(0,T-Math.min(idx,L.n)*inst),future:i>lastDue});
+ }
+ const dueN=Math.max(0,Math.min(L.n,lastDue-f+1));
+ const req=Math.min(T,dueN*inst);
+ const out=Math.max(0,T+pen-paid);
+ const over=req-paid;
+ const done=out<=0.5;
+ const intEarned=earn.reduce((a,e)=>a+e.int+e.pen,0);
+ const status=done?'done':over>inst*0.25?'behind':over<-inst*0.25?'ahead':'ok';
+ return {...L,T,inst,r,rows,paid,pen,out,req,over,behind:Math.max(0,over)/inst,done,earn,intEarned,status,dueN,
+  endM:ml(ms(f+L.n-1)),penOwed};
+}
+const C=LOANS.map(calc);
+const ST={behind:['Behind','t-behind'],ok:['On track','t-ok'],ahead:['Ahead','t-ahead'],done:['Paid off','t-done']};
+const tag=s=>`<span class="tag ${ST[s][1]}">${ST[s][0]}</span>`;
+
+// group by member
+const people=[...new Set(C.map(c=>c.name))];
+const byP=people.map(n=>{const ls=C.filter(c=>c.name===n);const s=k=>ls.reduce((a,c)=>a+c[k],0);
+ const active=ls.filter(c=>!c.done);const over=active.reduce((a,c)=>a+Math.max(0,c.over),0);
+ const inst=active.reduce((a,c)=>a+c.inst,0);
+ const st=active.length?(active.some(c=>c.status==='behind')?'behind':active.every(c=>c.status==='ahead')?'ahead':'ok'):'done';
+ return {n,ls,P:s('P'),T:s('T'),paid:s('paid'),pen:s('pen'),out:s('out'),over,behind:inst?over/inst:0,int:s('intEarned'),st}})
+ .sort((a,b)=>b.out-a.out);
+
+// ---- PAGE 1 ----
+{
+ const act=C.filter(c=>!c.done);
+ const tot=k=>act.reduce((a,c)=>a+c[k],0);
+ const overdue=act.reduce((a,c)=>a+Math.max(0,c.over),0);
+ const yr=now.getFullYear();
+ const intY=C.reduce((a,c)=>a+c.earn.filter(e=>e.m.startsWith(yr)).reduce((x,e)=>x+e.int+e.pen,0),0);
+ document.getElementById('kpis').innerHTML=[
+  [K(tot('P')),`Lent out on ${act.length} active loans`],
+  [K(tot('out')),'Outstanding (incl. penalties)'],
+  [K(overdue),`Overdue across ${act.filter(c=>c.status==='behind').length} loans`,1],
+  [K(intY),`Interest earned in ${yr}`]
+ ].map(([b,s,a])=>`<div class="kpi${a?' alert':''}"><b>${b}</b><span>${s}</span></div>`).join('');
+ const max=Math.max(...byP.map(p=>p.T+p.pen));
+ document.getElementById('routes').innerHTML=byP.map(p=>{
+  const due=Math.max(0,p.out-p.over-p.pen);
+  const seg=(v,c)=>v>0?`<i class="${c}" style="width:${v/max*100}%"></i>`:'';
+  return `<div class="route"><span class="nm">${p.n}</span><div class="bar" role="img" aria-label="${p.n}: repaid ${K(p.paid)}, overdue ${K(p.over)}">${seg(p.paid,'c-paid')}${seg(p.over,'c-arr')}${seg(Math.min(p.pen,p.out),'c-pen')}${seg(due,'c-due')}</div><span class="v">${p.out?K(p.out):'Cleared'}</span></div>`}).join('');
+ const s=k=>byP.reduce((a,p)=>a+p[k],0);
+ document.getElementById('sumtb').innerHTML=byP.map(p=>`<tr><td><a href="#member" data-who="${p.n}">${p.n}</a> <span style="color:var(--mute)">(${p.ls.map(l=>'#'+l.no).join(', ')})</span></td><td>${K(p.P)}</td><td>${K(p.T)}</td><td>${K(p.paid)}</td><td>${K(p.out)}</td><td>${p.over?K(p.over):'–'}</td><td>${p.behind>=0.05?p.behind.toFixed(1):'–'}</td><td>${K(p.int)}</td><td>${tag(p.st)}</td></tr>`).join('')
+ +`<tr class="tot"><td>Total</td><td>${K(s('P'))}</td><td>${K(s('T'))}</td><td>${K(s('paid'))}</td><td>${K(s('out'))}</td><td>${K(s('over'))}</td><td></td><td>${K(s('int'))}</td><td></td></tr>`;
+}
+
+// ---- PAGE 2 ----
+const who=document.getElementById('who');
+who.innerHTML=byP.map(p=>`<option>${p.n}</option>`).join('');
+function showWho(){
+ const ls=C.filter(c=>c.name===who.value);
+ document.getElementById('loans').innerHTML=ls.map(c=>{
+  const pct=Math.min(100,c.paid/(c.T+c.pen)*100), epct=Math.min(100,c.req/c.T*100);
+  return `<div class="loan"><h3>${c.name} · Loan #${c.no} ${tag(c.status)}</h3>
+  <div class="sub">Sheet #${c.id.replace(/[ab]$/,'')} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months at ${(c.I/c.P*100).toFixed(0)}% total interest · last instalment ${c.endM}</div>
+  <div class="facts">
+   <div>Advanced<b>${K(c.P)}</b></div><div>Principal + interest<b>${K(c.T)}</b></div><div>Monthly instalment<b>${K(c.inst)}</b></div>
+   <div>Paid so far<b>${K(c.paid)}</b></div><div>Penalties<b>${K(c.pen)}</b></div><div>Outstanding<b>${K(c.out)}</b></div>
+   <div>${c.over>=0?'Overdue':'Paid ahead'}<b style="color:${c.over>0?'var(--mag)':'inherit'}">${K(Math.abs(c.over))}</b></div>
+   <div>Months ${c.over>=0?'behind':'ahead'}<b>${(Math.abs(c.over)/c.inst).toFixed(1)}</b></div><div>Interest earned<b>${K(c.intEarned)}</b></div>
+  </div>
+  <div class="bar" style="height:12px;position:relative" role="img" aria-label="${pct.toFixed(0)}% repaid against ${epct.toFixed(0)}% due"><i class="c-paid" style="width:${pct}%"></i><span style="position:absolute;left:${epct}%;top:-4px;bottom:-4px;width:3px;background:var(--mag)"></span></div>
+  <p class="note" style="margin-top:6px">${pct.toFixed(0)}% repaid · magenta line = ${epct.toFixed(0)}% that should be repaid by now</p>
+  <div class="scroll"><table><thead><tr><th>Month</th><th>Required</th><th>Paid</th><th>Penalty</th><th>Actual balance</th><th>Expected balance</th></tr></thead><tbody>
+  ${c.rows.map(r=>`<tr style="${r.future?'color:var(--mute)':''}"><td>${ml(r.m)}</td><td>${r.due?K(r.due):''}</td><td>${r.p?K(r.p):(r.future||!r.due?'':'<span style="color:var(--mag)">–</span>')}</td><td>${r.pn?K(r.pn):''}</td><td>${K(Math.max(0,r.bal))}</td><td>${K(r.exp)}</td></tr>`).join('')}
+  <tr class="tot"><td>Total</td><td>${K(c.T)}</td><td>${K(c.paid)}</td><td>${K(c.pen)}</td><td></td><td></td></tr></tbody></table></div></div>`}).join('');
+}
+who.onchange=showWho;
+
+// ---- PAGE 3 ----
+const years=[...new Set(C.flatMap(c=>c.earn.map(e=>+e.m.slice(0,4))))].sort((a,b)=>b-a);
+const yrSel=document.getElementById('yr');
+yrSel.innerHTML=years.map(y=>`<option>${y}</option>`).join('');
+const SH=(D.shares||[]).filter(x=>x[0]&&+x[1]>0);
+let yearTotal=0;
+function showYear(){
+ const y=yrSel.value, E=C.flatMap(c=>c.earn.filter(e=>e.m.startsWith(y)).map(e=>({...e,c})));
+ const sum=k=>E.reduce((a,e)=>a+e[k],0);
+ yearTotal=sum('int')+sum('pen');
+ document.getElementById('ikpis').innerHTML=[[K(sum('pay')),`Collected in ${y}`],[K(sum('int')),'Interest from instalments'],[K(sum('pen')),'Penalties collected'],[K(yearTotal),`Total earned in ${y}`]]
+  .map(([b,s],i)=>`<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+ const mon=MN.map((_,i)=>{const k=`${y}-${String(i+1).padStart(2,'0')}`;const es=E.filter(e=>e.m===k);return{i:es.reduce((a,e)=>a+e.int,0),p:es.reduce((a,e)=>a+e.pen,0)}});
+ const mx=Math.max(1,...mon.map(m=>m.i+m.p));
+ document.getElementById('cols').innerHTML=mon.map(m=>`<div>${m.i+m.p?`<em style="top:${(1-(m.i+m.p)/mx)*100-12}%">${K((m.i+m.p)/1000)}k</em>`:''}<i class="p" style="height:${m.p/mx*100}%"></i><i style="height:${m.i/mx*100}%"></i></div>`).join('');
+ document.querySelectorAll('#cols i.p').forEach(el=>{el.parentNode.insertBefore(el,null)}); // penalties sit at the base
+ document.getElementById('mlab').innerHTML=MN.map(m=>`<span>${m[0]}</span>`).join('');
+ const by=C.map(c=>{const es=E.filter(e=>e.c===c);return{c,pay:es.reduce((a,e)=>a+e.pay,0),i:es.reduce((a,e)=>a+e.int,0),p:es.reduce((a,e)=>a+e.pen,0)}}).filter(x=>x.pay);
+ document.getElementById('bytb').innerHTML=by.map(x=>`<tr><td>${x.c.name} #${x.c.no}</td><td>${K(x.pay)}</td><td>${K(x.i)}</td><td>${x.p?K(x.p):'–'}</td><td><b>${K(x.i+x.p)}</b></td></tr>`).join('')
+  +`<tr class="tot"><td>Total</td><td>${K(sum('pay'))}</td><td>${K(sum('int'))}</td><td>${K(sum('pen'))}</td><td>${K(yearTotal)}</td></tr>`;
+ showShares();
+}
+function showShares(){
+ const tot=SH.reduce((a,x)=>a+(+x[1]),0);
+ document.getElementById('shtb').innerHTML=SH.length?SH.map(x=>{const pc=(+x[1])/tot;
+  return `<tr><td>${x[0]}</td><td>${K(+x[1])}</td><td>${(pc*100).toFixed(1)}%</td><td><b>${K(pc*yearTotal)}</b></td></tr>`}).join('')
+  +`<tr class="tot"><td>Total</td><td>${K(tot)}</td><td>100%</td><td>${K(yearTotal)}</td></tr>`
+  :`<tr><td colspan="4" style="text-align:left;color:var(--mute)">No shareholders yet. Add them on the Shareholders tab of the Sheet.</td></tr>`;
+}
+yrSel.onchange=showYear;
+
+// ---- ROUTING ----
+document.addEventListener('click',e=>{const a=e.target.closest('a[data-who]');if(a){who.value=a.dataset.who;showWho()}});
+function route(){const p=['summary','member','interest'].includes(location.hash.slice(1))?location.hash.slice(1):'summary';
+ for(const s of ['summary','member','interest'])document.getElementById('p-'+s).hidden=s!==p;
+ document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.p===p));}
+window.addEventListener('hashchange',route);
+showWho();showYear();route();
+}
+
+{
+const root=document.documentElement,btn=document.getElementById('theme');
+const sysDark=()=>window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches;
+const cur=()=>root.dataset.theme||(sysDark()?'dark':'light');
+const label=()=>{btn.textContent=cur()==='dark'?'☀ Light':'☾ Dark'};
+let saved='';try{saved=localStorage.getItem('es-theme')||''}catch(e){}
+if(saved)root.dataset.theme=saved;
+label();
+btn.addEventListener('click',()=>{const n=cur()==='dark'?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('es-theme',n)}catch(e){}label()});
+}
+
+var ENC={"s":"4PiQ2A9mtJ5Ii3rxwqys7A==","i":"2lx/zHgwIzycczMm","c":"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","n":600000};
+{
+const b2u=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function open(pin){
+ const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pin),'PBKDF2',false,['deriveKey']);
+ const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b2u(ENC.s),iterations:ENC.n,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['decrypt']);
+ const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b2u(ENC.i)},key,b2u(ENC.c));
+ return JSON.parse(new TextDecoder().decode(pt));
+}
+async function go(pin,quiet){
+ const err=document.getElementById('perr');
+ try{const D=await open(pin);try{sessionStorage.setItem('es-pin',pin)}catch(e){}
+  document.getElementById('gate').hidden=true;document.getElementById('app').hidden=false;document.getElementById('nav').hidden=false;start(D);}
+ catch(e){if(!quiet)err.textContent='That PIN did not open the page. Try again.';}
+}
+document.getElementById('gate').addEventListener('submit',e=>{e.preventDefault();go(document.getElementById('pin').value.trim())});
+let saved='';try{saved=sessionStorage.getItem('es-pin')||''}catch(e){}
+if(!ENC){document.getElementById('perr').textContent='No data published yet.'}else if(saved)go(saved,true);
+}
+</script>
+</body></html>

@@ -1,0 +1,32 @@
+name: Rebuild page from the Sheet
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['tools/**', '.github/workflows/**']
+  schedule:
+    - cron: "15 4,10,16 * * *"   # 07:15, 13:15, 19:15 Nairobi
+permissions:
+  contents: write
+concurrency: rebuild
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install cryptography google-auth requests
+      - name: Fetch Sheet data
+        env: { GOOGLE_SA_KEY: "${{ secrets.GOOGLE_SA_KEY }}" }
+        run: python3 tools/fetch_sheet.py "$RUNNER_TEMP/sheet"
+      - name: Build locked page
+        env: { ES_PIN: "${{ secrets.ES_PIN }}" }
+        run: |
+          python3 tools/build.py "$RUNNER_TEMP/sheet" --check
+          python3 tools/build.py "$RUNNER_TEMP/sheet"
+      - name: Commit if changed
+        run: |
+          git config user.name "electrosoft-rebuild"; git config user.email "actions@users.noreply.github.com"
+          git add -A; git commit -qm "Rebuild from Sheet" || exit 0
+          git pull --rebase -q; git push
