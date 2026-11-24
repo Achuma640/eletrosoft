@@ -7,7 +7,7 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import AuthorizedSession
 
 SHEET = "1cB7MrZNVaf-eirOCq13H1nNcbYOLg8Jly1Fnf_rBY20"
-RANGES = {"loans.json": "Loans!A1:K500", "payments.json": "Payments!A1:F20000", "shareholders.json": "Shareholders!A1:B500"}
+RANGES = {"loans.json": "Loans!A1:K500", "payments.json": "Payments!A1:F20000", "shareholders.json": "Shareholders!A1:B500", "settings.json": "Settings!A1:C50"}
 creds = service_account.Credentials.from_service_account_info(
     json.loads(os.environ["GOOGLE_SA_KEY"]), scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
 s = AuthorizedSession(creds)

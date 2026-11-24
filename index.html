@@ -141,6 +141,30 @@ section[hidden],nav[hidden]{display:none}
 [data-style=banking] body{padding-bottom:70px}[data-style=banking] .mtab tbody tr{border:0;border-radius:16px}}
 @media(max-width:600px){[data-style=app] .kpis,[data-style=banking] .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}[data-style=app] .kpi,[data-style=banking] .kpi{padding:14px}[data-style=app] .kpi b,[data-style=banking] .kpi b{font-size:22px}[data-style=app] .kpi,[data-style=banking] .kpi{border-bottom:1px solid var(--line)}}
 
+
+.duebar{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:14px 18px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:0;background:var(--card);margin-bottom:26px}
+.duebar.urgent{border-left-color:var(--mag)}
+.duebar .d{font:600 34px/1 'Cormorant Garamond',Georgia,serif;color:var(--ink);font-variant-numeric:lining-nums}
+.duebar.urgent .d{color:var(--mag)}
+.duebar .t{flex:1;min-width:200px}.duebar .t b{display:block;font-size:15.5px}.duebar .t span{color:var(--mute);font-size:13.5px}
+.toolrow{display:flex;justify-content:flex-end;margin:-8px 0 18px}
+.dl2{background:var(--green);color:#fbf8ef;border-color:var(--green)}
+.pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:14px 22px;margin-top:6px}
+.pool div{font-size:12.5px;color:var(--mute)}.pool b{display:block;font:600 24px/1.2 'Cormorant Garamond',Georgia,serif;color:var(--ink);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
+.util{height:12px;background:var(--due);margin:18px 0 6px;display:flex;overflow:hidden}.util i{background:var(--paid);display:block}
+.route .nm{display:flex;align-items:center;gap:8px}
+.ring{flex:none;color:var(--ink)}
+.seal{display:inline-flex;align-items:center;gap:5px;font:600 12px/1 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#5a4410;background:linear-gradient(#e7cf86,#c8a13a);padding:5px 10px 5px 7px;border-radius:999px;border:1px solid #a8841f;white-space:nowrap}
+.seal svg{width:14px;height:14px}
+.loanhead{display:flex;gap:16px;align-items:center;justify-content:space-between}
+.strip{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;margin:16px 0 4px;max-width:520px}
+.strip i{aspect-ratio:1;border-radius:50%;background:var(--due);display:block}
+.strip i.s-paid{background:var(--ok)}.strip i.s-part{background:light-dark(#9cc7ad,#3f7d58)}.strip i.s-miss{background:var(--mag)}.strip i.s-clear{background:var(--brown);opacity:.45}
+.strip i.s-pen{box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--brown)}
+.strip i.s-cur{outline:2px dashed var(--mute);outline-offset:2px}
+.stripcap{display:flex;justify-content:space-between;max-width:520px;font-size:11.5px;color:var(--mute)}
+.slegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mute);margin:8px 0 4px}
+.slegend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:var(--due)}
 /* ---- prominent tabs (all styles) ---- */
 nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:24px;border-top:1px solid rgba(212,178,102,.35)}
 nav a{display:flex;align-items:center;justify-content:center;gap:9px;padding:14px 6px 15px;font-size:16px;font-weight:600;letter-spacing:.01em;color:#e7ece8;border-bottom:3px solid transparent;text-align:center;line-height:1.2}
@@ -210,8 +234,11 @@ pre,.scroll{overflow-x:auto}
 <div style="display:flex;gap:10px"><input id="pin" type="password" inputmode="numeric" autocomplete="current-password" style="flex:1"><button type="submit">Open</button></div>
 <p id="perr" class="note" style="color:var(--mag);min-height:1.5em;margin-inline:auto"></p></form>
 <div id="app" hidden>
+<div id="duebar"></div>
 <section id="p-summary">
+<div class="toolrow"><button type="button" class="dl dl2" id="report">Download meeting report (PDF)</button></div>
 <div class="kpis" id="kpis"></div>
+<div class="box"><h2>Pool health</h2><div class="pool" id="pool"></div><div class="util" id="util"></div><p class="note" id="poolnote" style="margin-top:4px"></p></div>
 <div class="box"><h2>Where each member stands</h2>
 <div class="legend"><span><i class="c-paid"></i>Repaid</span><span><i class="c-due"></i>Not yet due</span><span><i class="c-arr"></i>Overdue</span><span><i class="c-pen"></i>Penalties</span></div>
 <div id="routes"></div></div>
@@ -234,7 +261,7 @@ pre,.scroll{overflow-x:auto}
 </div>
 <div class="box" style="margin-top:36px"><h2>Each shareholder's earnings</h2>
 <p class="note" style="margin-top:0">Each shareholder's part of the interest and penalties earned in the chosen year, in proportion to shares held.</p>
-<div class="scroll"><table><thead><tr><th>Shareholder</th><th>Shareholding</th><th>Share %</th><th>Earned</th></tr></thead><tbody id="shtb"></tbody></table></div></div>
+<div class="scroll"><table><thead><tr><th>Shareholder</th><th>Shareholding</th><th>Share %</th><th>Earned</th><th id="projh">Projected full year</th></tr></thead><tbody id="shtb"></tbody></table></div></div>
 <p class="note">Interest earned is counted when cash comes in: each payment first clears any penalty owed (penalty = income), and the rest is split between principal and interest in the loan's own ratio (e.g. 15% interest loan → 13.0% of each payment is interest).</p>
 </section>
 </div></div></main>
@@ -278,6 +305,24 @@ const C=LOANS.map(calc);
 const ST={behind:['Behind','t-behind'],ok:['On track','t-ok'],ahead:['Ahead','t-ahead'],done:['Paid off','t-done']};
 const rateTxt=c=>c.n>12?'10% a year (year 2 on remaining balance)':'10% interest';
 const tag=s=>`<span class="tag ${ST[s][1]}">${ST[s][0]}</span>`;
+const SET=D.settings||{};
+const num=v=>{const x=parseFloat(String(v??'').replace(/[^0-9.\-]/g,''));return isFinite(x)?x:null};
+const pctRepaid=x=>(x.T+x.pen)?Math.min(100,x.paid/(x.T+x.pen)*100):0;
+const ringCol=st=>st==='behind'?'var(--mag)':st==='done'?'var(--gold)':'var(--ok)';
+const ring=(pct,sz,col)=>{const w=sz>50?7:4,r=sz/2-w/2-1,c=2*Math.PI*r,p=Math.max(0,Math.min(100,pct));
+ return `<svg class="ring" width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}" role="img" aria-label="${p.toFixed(0)}% repaid"><circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="var(--due)" stroke-width="${w}"/><circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${(c*p/100).toFixed(2)} ${c.toFixed(2)}" transform="rotate(-90 ${sz/2} ${sz/2})"/>${sz>50?`<text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-size="${(sz/4.3).toFixed(0)}" font-weight="600" fill="currentColor">${p.toFixed(0)}%</text>`:''}</svg>`};
+const seal='<span class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Cleared</span>';
+const principalOut=c=>{const pr=c.earn.reduce((a,e)=>a+(e.pay-e.pen-e.int),0);return Math.max(0,c.P-pr)};
+const lastPayM=c=>Math.max(...Object.keys(c.pay).map(mi),-1);
+function strip(c){const f=mi(c.first),lp=lastPayM(c);let h='';
+ for(let k=0;k<c.n;k++){const i=f+k,m=ms(i),p=c.pay[m]||0,pn=c.pen[m]||0;let cl,t;
+  if(c.done&&i>lp&&!p){cl='s-clear';t='cleared early'}
+  else if(i>lastDue){cl=i===curM?'s-cur'+(p?(p>=c.inst*.95?' s-paid':' s-part'):''):'';t=i===curM?(p?'paid '+K(p)+' (this month)':'this month, due by month end'):'not yet due'}
+  else if(p>=c.inst*0.95){cl='s-paid';t='paid '+K(p)}else if(p>0){cl='s-part';t='part paid '+K(p)}else{cl='s-miss';t='missed'}
+  if(pn){cl+=' s-pen';t+=', penalty '+K(pn)}
+  h+=`<i class="${cl}" title="${ml(m)}: ${t}"></i>`}
+ return `<div class="strip" role="img" aria-label="Payment record, one dot per month">${h}</div><div class="stripcap"><span>${ml(c.first)}</span><span>${c.endM}</span></div>
+ <div class="slegend"><span><i style="background:var(--ok)"></i>Paid</span><span><i style="background:light-dark(#9cc7ad,#3f7d58)"></i>Part paid</span><span><i style="background:var(--mag)"></i>Missed</span><span><i style="box-shadow:0 0 0 2px var(--brown) inset"></i>Penalty</span><span><i style="outline:2px dashed var(--mute);outline-offset:1px"></i>This month</span><span><i></i>Not yet due</span></div>`}
 
 // group by member
 const people=[...new Set(C.map(c=>c.name))];
@@ -305,10 +350,37 @@ const byP=people.map(n=>{const ls=C.filter(c=>c.name===n);const s=k=>ls.reduce((
  document.getElementById('routes').innerHTML=byP.map(p=>{
   const due=Math.max(0,p.out-p.over-p.pen);
   const seg=(v,c)=>v>0?`<i class="${c}" style="width:${v/max*100}%"></i>`:'';
-  return `<div class="route"><span class="nm">${p.n}</span><div class="bar" role="img" aria-label="${p.n}: repaid ${K(p.paid)}, overdue ${K(p.over)}">${seg(p.paid,'c-paid')}${seg(p.over,'c-arr')}${seg(Math.min(p.pen,p.out),'c-pen')}${seg(due,'c-due')}</div><span class="v">${p.out?K(p.out):'Cleared'}</span></div>`}).join('');
+  return `<div class="route"><span class="nm">${ring(pctRepaid(p),30,ringCol(p.st))}${p.n}</span><div class="bar" role="img" aria-label="${p.n}: repaid ${K(p.paid)}, overdue ${K(p.over)}">${seg(p.paid,'c-paid')}${seg(p.over,'c-arr')}${seg(Math.min(p.pen,p.out),'c-pen')}${seg(due,'c-due')}</div><span class="v">${p.out?K(p.out):seal}</span></div>`}).join('');
  const s=k=>byP.reduce((a,p)=>a+p[k],0);
  document.getElementById('sumtb').innerHTML=byP.map((p,i)=>`<tr class="g${i%6}"><td><a href="#member" data-who="${p.n}" class="${p.st==='behind'?'nm-behind':'nm-ok'}">${p.n}</a> <span style="color:var(--mute)">(${p.ls.map(l=>'#'+l.no).join(', ')})</span></td><td>${K(p.P)}</td><td>${K(p.T)}</td><td>${K(p.paid)}</td><td>${K(p.out)}</td><td>${p.over?K(p.over):'–'}</td><td>${p.behind>=0.05?p.behind.toFixed(1):'–'}</td><td>${K(p.int)}</td><td>${tag(p.st)}</td></tr>`).join('')
  +`<tr class="tot"><td>Total</td><td>${K(s('P'))}</td><td>${K(s('T'))}</td><td>${K(s('paid'))}</td><td>${K(s('out'))}</td><td>${K(s('over'))}</td><td></td><td>${K(s('int'))}</td><td></td></tr>`;
+}
+
+// ---- DUE COUNTDOWN ----
+{
+ const endD=new Date(now.getFullYear(),now.getMonth()+1,0);
+ const days=Math.round((endD-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
+ const still=C.filter(c=>!c.done&&mi(c.first)<=curM).filter(c=>{const n=Math.min(c.n,curM-mi(c.first)+1);return Math.min(c.T,n*c.inst)-c.paid>c.inst*0.05});
+ const names=[...new Set(still.map(c=>c.name))];
+ const mon=MN[now.getMonth()];
+ document.getElementById('duebar').innerHTML=`<div class="duebar${days<=5?' urgent':''}"><div class="d">${days===0?'Today':days+(days===1?' day':' days')}</div><div class="t"><b>${mon} instalments ${days===0?'are due today':'due by '+endD.getDate()+' '+mon}</b><span>${names.length?'Still to pay this month: '+names.join(', '):'Everyone is paid up for '+mon+'.'}</span></div></div>`;
+}
+// ---- POOL HEALTH ----
+const shareTot=(D.shares||[]).reduce((a,x)=>a+(+x[1]||0),0);
+const pOut=C.filter(c=>!c.done).reduce((a,c)=>a+principalOut(c),0);
+const intAll=C.reduce((a,c)=>a+c.intEarned,0);
+const cashSet=num(SET['Cash available to lend']);
+{
+ const util=shareTot?Math.min(100,pOut/shareTot*100):0;
+ document.getElementById('pool').innerHTML=[
+  [K(shareTot),'Total shareholding'],
+  [K(pOut),'Principal on loan now'],
+  [util.toFixed(0)+'%','Share of the pool on loan'],
+  [K(intAll),'Interest and penalties earned to date'],
+  [cashSet!==null?K(cashSet):'Not set','Cash available to lend'+(cashSet!==null&&SET['Cash figure as at']?' (as at '+SET['Cash figure as at']+')':'')]
+ ].map(([b,s])=>`<div><b>${b}</b>${s}</div>`).join('');
+ document.getElementById('util').innerHTML=`<i style="width:${util}%"></i>`;
+ document.getElementById('poolnote').textContent=cashSet!==null?'Cash figure entered by the Treasurer in the Sheet (Settings tab).':'The Treasurer can add the cash available to lend on the Settings tab of the Sheet; part of the pool is also held in investments such as CIC and Mansa X.';
 }
 
 // ---- PAGE 2 ----
@@ -321,9 +393,10 @@ function showWho(){
  const ls=C.filter(c=>c.name===curWho);
  document.getElementById('loans').innerHTML=ls.map(c=>{
   const pct=Math.min(100,c.paid/(c.T+c.pen)*100), epct=Math.min(100,c.req/c.T*100);
-  return `<div class="loan ${c.status==="behind"?"behind":""}"><h3>${c.name} · Loan #${c.no} ${tag(c.status)}</h3>
-  <div class="sub">Sheet #${c.sheet} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months · ${rateTxt(c)} · last instalment ${c.endM}</div>
-  <button type="button" class="dl" data-loan="${c.id}">Download statement (PDF)</button>
+  return `<div class="loan ${c.status==="behind"?"behind":""}"><div class="loanhead"><div><h3>${c.name} · Loan #${c.no} ${c.done?seal:tag(c.status)}</h3>
+  <div class="sub">Sheet #${c.sheet} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months · ${rateTxt(c)} · last instalment ${c.endM}</div></div>${ring(pctRepaid(c),76,ringCol(c.status))}</div>
+  ${strip(c)}
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="dl" data-loan="${c.id}">Download statement (PDF)</button>${c.done?`<button type="button" class="dl dl2" data-clear="${c.id}">Download clearance letter (PDF)</button>`:''}</div>
   <div class="facts">
    <div>Advanced<b>${K(c.P)}</b></div><div>Principal + interest<b>${K(c.T)}</b></div><div>Monthly instalment<b>${K(c.inst)}</b></div>
    <div>Paid so far<b>${K(c.paid)}</b></div><div>Penalties<b>${K(c.pen)}</b></div><div>Outstanding<b>${K(c.out)}</b></div>
@@ -383,20 +456,81 @@ async function statement(c,btn){
  }catch(e){alert('Could not create the PDF. Please check your connection and try again.')}
  finally{btn.textContent=old;btn.disabled=false}
 }
-document.getElementById('loans').addEventListener('click',e=>{const b=e.target.closest('button.dl');if(b)statement(C.find(c=>c.id===b.dataset.loan),b)});
+document.getElementById('loans').addEventListener('click',e=>{const b=e.target.closest('button.dl');if(!b)return;if(b.dataset.clear)clearance(C.find(c=>c.id===b.dataset.clear),b);else statement(C.find(c=>c.id===b.dataset.loan),b)});
+const GRc=[14,59,38],GDc=[184,149,74],INKc=[22,35,27],MUc=[93,106,97],REDc=[142,44,58];
+const asOfTxt=()=>`${now.getDate()} ${MN[now.getMonth()]} ${now.getFullYear()}`;
+function pdfHead(doc,crest,title){const W=210;
+ doc.setFillColor(...GRc);doc.rect(0,0,W,34,'F');doc.setFillColor(...GDc);doc.rect(0,34,W,0.8,'F');
+ doc.addImage(crest,'PNG',14,6,22,22);
+ doc.setTextColor(...GDc);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text('PENNYVALE ELECTROSOFT LTD',41,13,{charSpace:0.8});
+ doc.setTextColor(255,255,255);doc.setFont('times','bold');doc.setFontSize(20);doc.text(title,41,23);
+ doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(210,220,212);doc.text(`As at ${asOfTxt()}`,W-14,13,{align:'right'});doc.text('Amounts in KES',W-14,18,{align:'right'});}
+function pdfFoot(doc){const W=210,n=doc.getNumberOfPages();for(let i=1;i<=n;i++){doc.setPage(i);doc.setDrawColor(...GDc);doc.setLineWidth(0.3);doc.line(14,284,W-14,284);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...MUc);doc.text('Pennyvale Electrosoft Ltd · P.O. Box 996 – 00100 GPO, Nairobi · Tel +254 720 045 710',14,289);doc.text(`Page ${i} of ${n}`,W-14,289,{align:'right'});}}
+function h2pdf(doc,t,y){doc.setFont('times','bold');doc.setFontSize(13);doc.setTextColor(...INKc);doc.text(t,14,y);doc.setFillColor(...GDc);doc.rect(14,y+2,14,0.4,'F');return y+5}
+async function withBtn(btn,fn){const old=btn.textContent;btn.textContent='Preparing PDF…';btn.disabled=true;try{const crest=await getLibs();await fn(crest)}catch(e){alert('Could not create the PDF. Please check your connection and try again.')}finally{btn.textContent=old;btn.disabled=false}}
+function clearance(c,btn){withBtn(btn,crest=>{
+ const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});pdfHead(doc,crest,'Loan clearance letter');
+ const lp=lastPayM(c),fin=lp>=0?ml(ms(lp)):'';
+ let y=52;doc.setFont('helvetica','normal');doc.setFontSize(10.5);doc.setTextColor(...INKc);
+ doc.text(asOfTxt(),14,y);y+=10;doc.text(`To: ${c.name}`,14,y);y+=12;
+ doc.setFont('times','bold');doc.setFontSize(15);doc.text(`Clearance of Quick Cash loan #${c.no}`,14,y);y+=9;
+ doc.setFont('helvetica','normal');doc.setFontSize(10.5);
+ const body=`This is to confirm that the Quick Cash loan of KES ${K(c.P)} advanced to ${c.name} on ${c.date.split('-').reverse().join('/')} has been repaid in full. The total amount repaid, including interest${c.pen?' and penalties':''}, is KES ${K(c.paid)}, with the final payment received in ${fin}${c.endM&&mi(c.endM)!==lp?', ahead of the scheduled last instalment':''}. No further amount is owed on this loan.`;
+ const lines=doc.splitTextToSize(body,182);doc.text(lines,14,y);y+=lines.length*5.6+6;
+ doc.autoTable({startY:y,theme:'plain',styles:{fontSize:10,cellPadding:2.4,textColor:INKc},columnStyles:{0:{textColor:MUc,cellWidth:70},1:{fontStyle:'bold',halign:'right'}},tableLineColor:[227,223,211],tableLineWidth:0.2,margin:{left:14,right:90},
+  body:[['Loan advanced',K(c.P)],['Interest',K(c.I)],['Penalties',K(c.pen)],['Total repaid',K(c.paid)],['Balance','0'],['Scheduled last instalment',c.endM],['Final payment',fin]]});
+ y=doc.lastAutoTable.finalY+14;doc.setFont('helvetica','normal');doc.setFontSize(10.5);doc.text('Thank you for your prompt repayment, which keeps the fund revolving for all members.',14,y);
+ y+=26;doc.setDrawColor(...INKc);doc.setLineWidth(0.3);doc.line(14,y,84,y);doc.setFontSize(9);doc.setTextColor(...MUc);doc.text(`${SET['Treasurer name']||'Treasurer'}, Treasurer`,14,y+5);doc.text('Pennyvale Electrosoft Ltd',14,y+10);
+ doc.setDrawColor(...GDc);doc.setLineWidth(1.2);doc.circle(170,y-8,15);doc.setLineWidth(0.4);doc.circle(170,y-8,12.5);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(...GDc);doc.text('CLEARED',170,y-9,{align:'center'});doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.text(fin,170,y-4.5,{align:'center'});
+ pdfFoot(doc);doc.save(`Quick-Cash-clearance-${c.name}-loan${c.no}.pdf`);})}
+function report(btn){withBtn(btn,crest=>{
+ const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});pdfHead(doc,crest,'Quick Cash report');
+ const act=C.filter(c=>!c.done),yr=String(now.getFullYear());
+ const E=C.flatMap(c=>c.earn.filter(e=>e.m.startsWith(yr)).map(e=>({...e,c})));const yInt=E.reduce((a,e)=>a+e.int+e.pen,0);
+ let y=46;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...MUc);doc.text(`Prepared for the members' meeting · instalments counted to the end of ${MN[(lastDue%12+12)%12]} ${Math.floor(lastDue/12)}`,14,y);
+ y=h2pdf(doc,'Position at a glance',y+9);
+ const ov=act.reduce((a,c)=>a+Math.max(0,c.over),0);
+ doc.autoTable({startY:y,theme:'plain',styles:{fontSize:9.5,cellPadding:2.2,textColor:INKc},columnStyles:{1:{fontStyle:'bold',halign:'right'},3:{fontStyle:'bold',halign:'right'}},tableLineColor:[227,223,211],tableLineWidth:0.2,margin:{left:14,right:14},
+  body:[['Active loans',String(act.length),'Lent out (advanced)',K(act.reduce((a,c)=>a+c.P,0))],['Outstanding incl. penalties',K(act.reduce((a,c)=>a+c.out,0)),'Overdue',K(ov)],['Total shareholding',K(shareTot),'Principal on loan now',K(pOut)],[`Interest earned ${yr}`,K(yInt),'Cash available to lend',cashSet!==null?K(cashSet):'Not set']],
+  didParseCell:d=>{if(d.section==='body'&&d.row.index===1&&d.column.index===3)d.cell.styles.textColor=REDc}});
+ y=h2pdf(doc,'Loans by member',doc.lastAutoTable.finalY+10);
+ doc.autoTable({startY:y,head:[['Member','Loan','Issued','Repayable','Paid','Outstanding','Overdue','Months','Status']],theme:'striped',headStyles:{fillColor:GRc,textColor:255,fontSize:8,halign:'right'},styles:{fontSize:8.3,halign:'right',cellPadding:1.8},alternateRowStyles:{fillColor:[246,246,244]},columnStyles:{0:{halign:'left'},1:{halign:'left'}},margin:{left:14,right:14},
+  body:C.slice().sort((a,b)=>b.out-a.out).map(c=>[c.name,'#'+c.no,K(c.P),K(c.T),K(c.paid),K(c.out),c.over>0?K(c.over):'–',c.over>0?(c.over/c.inst).toFixed(1):'–',ST[c.status][0]]),
+  didParseCell:d=>{if(d.section==='head'&&d.column.index<2)d.cell.styles.halign='left';if(d.section==='body'&&d.column.index===8){const t=d.cell.raw;d.cell.styles.textColor=t==='Behind'?REDc:t==='Paid off'?GDc:[46,107,71];d.cell.styles.fontStyle='bold'}}});
+ const beh=act.filter(c=>c.status==='behind');
+ if(beh.length){y=h2pdf(doc,'Follow-up needed',doc.lastAutoTable.finalY+10);doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.setTextColor(...INKc);
+  beh.forEach(c=>{doc.setTextColor(...REDc);doc.text('•',15,y+3);doc.setTextColor(...INKc);doc.text(`${c.name} (loan #${c.no}): ${K(c.over)} overdue, about ${(c.over/c.inst).toFixed(1)} months; penalties so far ${K(c.pen)}.`,19,y+3);y+=6});y-=3}
+ else y=doc.lastAutoTable.finalY;
+ y=h2pdf(doc,`Interest earned in ${yr} by loan`,y+10);
+ const byl=C.map(c=>{const es=E.filter(e=>e.c===c);return[c.name+' #'+c.no,K(es.reduce((a,e)=>a+e.pay,0)),K(es.reduce((a,e)=>a+e.int,0)),K(es.reduce((a,e)=>a+e.pen,0)),K(es.reduce((a,e)=>a+e.int+e.pen,0))]}).filter(r=>r[1]!=='0');
+ doc.autoTable({startY:y,head:[['Loan','Collected','Interest','Penalties','Total earned']],body:byl.concat([['Total',K(E.reduce((a,e)=>a+e.pay,0)),K(E.reduce((a,e)=>a+e.int,0)),K(E.reduce((a,e)=>a+e.pen,0)),K(yInt)]]),theme:'striped',headStyles:{fillColor:GRc,textColor:255,fontSize:8.5,halign:'right'},styles:{fontSize:8.5,halign:'right',cellPadding:1.8},columnStyles:{0:{halign:'left'}},margin:{left:14,right:14},
+  didParseCell:d=>{if(d.section==='head'&&d.column.index===0)d.cell.styles.halign='left';if(d.section==='body'&&d.row.index===byl.length){d.cell.styles.fontStyle='bold';d.cell.styles.fillColor=[236,231,218]}}});
+ const proj=yInt+projRest();
+ y=h2pdf(doc,"Shareholders' earnings",doc.lastAutoTable.finalY+10);
+ const SHr=(D.shares||[]).filter(x=>x[0]&&+x[1]>0);
+ doc.autoTable({startY:y,head:[['Shareholder','Shareholding','Share %',`Earned ${yr} to date`,`Projected full ${yr}`]],body:SHr.map(x=>{const pc=+x[1]/shareTot;return[x[0],K(+x[1]),(pc*100).toFixed(2)+'%',K(pc*yInt),K(pc*proj)]}).concat([['Total',K(shareTot),'100%',K(yInt),K(proj)]]),theme:'striped',headStyles:{fillColor:GRc,textColor:255,fontSize:8.5,halign:'right'},styles:{fontSize:8.5,halign:'right',cellPadding:1.8},columnStyles:{0:{halign:'left'}},margin:{left:14,right:14},
+  didParseCell:d=>{if(d.section==='head'&&d.column.index===0)d.cell.styles.halign='left';if(d.section==='body'&&d.row.index===SHr.length){d.cell.styles.fontStyle='bold';d.cell.styles.fillColor=[236,231,218]}}});
+ y=doc.lastAutoTable.finalY+6;doc.setFont('helvetica','italic');doc.setFontSize(7.5);doc.setTextColor(...MUc);doc.text('Projection assumes every active loan pays its scheduled instalments for the rest of the year. Interest is counted when cash is received.',14,y);
+ y+=20;if(y>265){doc.addPage();y=40}
+ doc.setDrawColor(...INKc);doc.setLineWidth(0.3);doc.line(14,y,80,y);doc.line(120,y,186,y);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...MUc);
+ doc.text(`${SET['Treasurer name']||''}${SET['Treasurer name']?', ':''}Treasurer`,14,y+5);doc.text(`${SET['Chairman name']||''}${SET['Chairman name']?', ':''}Chairman`,120,y+5);
+ pdfFoot(doc);doc.save(`Quick-Cash-report-${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}.pdf`);})}
+document.getElementById('report').addEventListener('click',e=>report(e.currentTarget));
+function projRest(){let t=0;for(const c of C.filter(c=>!c.done)){const f=mi(c.first);let out=c.out;for(let i=Math.max(curM,f);i<=now.getFullYear()*12+11&&i<=f+c.n-1;i++){if(i===curM&&c.pay[ms(i)])continue;const p=Math.min(c.inst,out);out-=p;t+=p*c.r}}return t}
 
 // ---- PAGE 3 ----
 const years=[...new Set(C.flatMap(c=>c.earn.map(e=>+e.m.slice(0,4))))].sort((a,b)=>b-a);
 const yrSel=document.getElementById('yr');
 yrSel.innerHTML=years.map(y=>`<option>${y}</option>`).join('');
 const SH=(D.shares||[]).filter(x=>x[0]&&+x[1]>0);
-let yearTotal=0;
+let yearTotal=0,projTotal=null;
 function showYear(){
  const y=yrSel.value, E=C.flatMap(c=>c.earn.filter(e=>e.m.startsWith(y)).map(e=>({...e,c})));
  const sum=k=>E.reduce((a,e)=>a+e[k],0);
  yearTotal=sum('int')+sum('pen');
+ projTotal=y===String(now.getFullYear())?yearTotal+projRest():null;
  document.getElementById('ikpis').innerHTML=[[K(sum('pay')),`Collected in ${y}`],[K(sum('int')),'Interest from instalments'],[K(sum('pen')),'Penalties collected'],[K(yearTotal),`Total earned in ${y}`]]
-  .concat(SH.length?[[K(SH.reduce((a,x)=>a+(+x[1]),0)),'Total shareholding']]:[]).map(([b,s],i)=>`<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+  .concat(projTotal!==null?[[K(projTotal),`Projected full ${y} (if all pay on schedule)`]]:[]).concat(SH.length?[[K(SH.reduce((a,x)=>a+(+x[1]),0)),'Total shareholding']]:[]).map(([b,s],i)=>`<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
  const mon=MN.map((_,i)=>{const k=`${y}-${String(i+1).padStart(2,'0')}`;const es=E.filter(e=>e.m===k);return{i:es.reduce((a,e)=>a+e.int,0),p:es.reduce((a,e)=>a+e.pen,0)}});
  const mx=Math.max(1,...mon.map(m=>m.i+m.p));
  document.getElementById('cols').innerHTML=mon.map(m=>`<div>${m.i+m.p?`<em style="top:${(1-(m.i+m.p)/mx)*100-12}%">${K((m.i+m.p)/1000)}k</em>`:''}<i class="p" style="height:${m.p/mx*100}%"></i><i style="height:${m.i/mx*100}%"></i></div>`).join('');
@@ -410,8 +544,8 @@ function showYear(){
 function showShares(){
  const tot=SH.reduce((a,x)=>a+(+x[1]),0);
  document.getElementById('shtb').innerHTML=SH.length?SH.map(x=>{const pc=(+x[1])/tot;
-  return `<tr><td>${x[0]}</td><td>${K(+x[1])}</td><td>${(pc*100).toFixed(1)}%</td><td><b>${K(pc*yearTotal)}</b></td></tr>`}).join('')
-  +`<tr class="tot"><td>Total</td><td>${K(tot)}</td><td>100%</td><td>${K(yearTotal)}</td></tr>`
+  return `<tr><td>${x[0]}</td><td>${K(+x[1])}</td><td>${(pc*100).toFixed(1)}%</td><td><b>${K(pc*yearTotal)}</b></td><td>${projTotal!==null?K(pc*projTotal):'–'}</td></tr>`}).join('')
+  +`<tr class="tot"><td>Total</td><td>${K(tot)}</td><td>100%</td><td>${K(yearTotal)}</td><td>${projTotal!==null?K(projTotal):'–'}</td></tr>`
   :`<tr><td colspan="4" style="text-align:left;color:var(--mute)">No shareholders yet. Add them on the Shareholders tab of the Sheet.</td></tr>`;
 }
 yrSel.onchange=showYear;
