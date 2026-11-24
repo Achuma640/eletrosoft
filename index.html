@@ -95,12 +95,83 @@ section{animation:fade .35s ease}
 .loan.behind h3{color:var(--mag)}
 .mlab span b{font-weight:400}
 section[hidden],nav[hidden]{display:none}
+#stylebar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px max(5vw,14px);background:light-dark(#f1efe8,#151a17);border-bottom:1px solid var(--line);font:500 13px/1.3 Inter,sans-serif;color:var(--mute)}
+#stylebar span{margin-right:4px}
+#stylebar button{min-height:36px;padding:4px 12px;font-size:13px;border-radius:18px;background:transparent;color:var(--ink);border:1px solid var(--line)}
+#stylebar button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* ---- 1 APP ---- */
+[data-style=app] h1,[data-style=app] h2,[data-style=app] h3,[data-style=app] .kpi b,[data-style=app] .facts b{font-family:Inter,system-ui,sans-serif;font-weight:600;letter-spacing:-.01em}
+[data-style=app] h1{font-size:clamp(26px,4vw,36px)}[data-style=app] h2{font-size:19px}[data-style=app] h2::after{display:none}
+[data-style=app] header.band{border-bottom:0;border-radius:0 0 26px 26px}
+[data-style=app] .kpis{border:0;gap:10px}
+[data-style=app] .kpi{background:var(--card);border:1px solid var(--line);border-radius:16px}
+[data-style=app] .kpi b{font-size:26px}
+[data-style=app] .box,[data-style=app] .loan,[data-style=app] #gate{border-radius:18px;border-top:1px solid var(--line)}
+[data-style=app] .loan.behind{border:1px solid var(--mag)}
+[data-style=app] .bar{height:10px;border-radius:6px}
+[data-style=app] th{text-transform:none;letter-spacing:0;font-size:12.5px;color:var(--mute);border-bottom:1px solid var(--line)}
+[data-style=app] .mtab tbody td:first-child{border-radius:12px 0 0 12px}[data-style=app] .mtab tbody td:last-child{border-radius:0 12px 12px 0}
+[data-style=app] .chip{border-radius:999px}
+[data-style=app] button,[data-style=app] select,[data-style=app] input{border-radius:12px}
+[data-style=app] tr.tot td{border-bottom:1px solid var(--line)}
+/* ---- 2 BANKING ---- */
+[data-style=banking]{--bg:light-dark(#eef2ef,#07110b);--card:light-dark(#ffffff,#10201a)}
+[data-style=banking] h1,[data-style=banking] h2,[data-style=banking] h3,[data-style=banking] .kpi b,[data-style=banking] .facts b{font-family:Inter,system-ui,sans-serif;font-weight:600;letter-spacing:-.015em}
+[data-style=banking] h2{font-size:19px}[data-style=banking] h2::after{display:none}
+[data-style=banking] header.band{background:var(--bg);color:var(--ink);border-bottom:0}
+[data-style=banking] header h1{color:var(--ink);font-size:clamp(24px,4vw,34px)}
+[data-style=banking] header .sub{color:var(--mute)}
+[data-style=banking] #theme{color:var(--ink);border-color:var(--line)}
+[data-style=banking] nav a{color:var(--mute)}[data-style=banking] nav a.on{color:var(--ink);border-color:var(--gold)}
+[data-style=banking] .kpis{border:0;gap:12px}
+[data-style=banking] .kpi{background:var(--card);border:0;border-radius:20px;padding:18px 20px}
+[data-style=banking] .kpi:first-child{background:#0e3b26;color:#e8efe9}
+[data-style=banking] .kpi:first-child span{color:#b9cbbf}[data-style=banking] .kpi:first-child b{color:#d4b266}
+[data-style=banking] .kpi.alert{background:#c8a13a}[data-style=banking] .kpi.alert b{color:#2a1d04}[data-style=banking] .kpi.alert span{color:#3e2f0d}
+[data-style=banking] .box,[data-style=banking] .loan,[data-style=banking] #gate{border:0;border-radius:22px}
+[data-style=banking] .loan.behind{box-shadow:inset 0 0 0 2px var(--mag)}
+[data-style=banking] .bar{height:10px;border-radius:6px}
+[data-style=banking] th{text-transform:none;letter-spacing:0;font-size:12.5px;color:var(--mute);border-bottom:1px solid var(--line)}
+[data-style=banking] .mtab tbody td{border:0}[data-style=banking] .mtab tbody td:first-child{border-radius:14px 0 0 14px}[data-style=banking] .mtab tbody td:last-child{border-radius:0 14px 14px 0}
+[data-style=banking] .chip{border-radius:999px}
+[data-style=banking] button,[data-style=banking] select,[data-style=banking] input{border-radius:14px}
+[data-style=banking] tr.tot td{border-bottom:1px solid var(--line)}
+@media(max-width:700px){[data-style=banking] nav:not([hidden]){position:fixed;left:0;right:0;bottom:0;z-index:5;margin:0;justify-content:space-around;background:#0e3b26;padding:0 6px env(safe-area-inset-bottom);gap:0}
+[data-style=banking] nav a{color:#b9cbbf;flex:1;text-align:center;font-size:13px}[data-style=banking] nav a.on{color:#d4b266;border-color:#d4b266}
+[data-style=banking] body{padding-bottom:70px}[data-style=banking] .mtab tbody tr{border:0;border-radius:16px}}
+@media(max-width:600px){[data-style=app] .kpis,[data-style=banking] .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}[data-style=app] .kpi,[data-style=banking] .kpi{padding:14px}[data-style=app] .kpi b,[data-style=banking] .kpi b{font-size:22px}[data-style=app] .kpi,[data-style=banking] .kpi{border-bottom:1px solid var(--line)}}
+/* ---- 4 MINIMAL ---- */
+[data-style=minimal]{--bg:light-dark(#ffffff,#0d0f0e);--card:light-dark(#ffffff,#121514);--hair:var(--line);--gold:var(--mute);--paid:light-dark(#1a1a1a,#e6e6e6);--brown:light-dark(#9a9a9a,#8a8a8a);--due:light-dark(#efefef,#222)}
+[data-style=minimal] h1,[data-style=minimal] h2,[data-style=minimal] h3,[data-style=minimal] .kpi b,[data-style=minimal] .facts b{font-family:Inter,system-ui,sans-serif;font-weight:600;letter-spacing:-.015em}
+[data-style=minimal] h2{font-size:18px}[data-style=minimal] h2::after{display:none}
+[data-style=minimal] header.band{background:var(--bg);color:var(--ink);border-bottom:1px solid var(--line)}
+[data-style=minimal] header h1{color:var(--ink);font-size:clamp(22px,3.5vw,30px)}
+[data-style=minimal] .brand svg{width:44px;filter:none}
+[data-style=minimal] .co,[data-style=minimal] header .sub{color:var(--mute)}
+[data-style=minimal] #theme{color:var(--ink);border-color:var(--line)}
+[data-style=minimal] nav a{color:var(--mute)}[data-style=minimal] nav a.on{color:var(--ink);border-color:var(--ink)}
+[data-style=minimal] .kpis{border-top:0;border-bottom:1px solid var(--line)}
+[data-style=minimal] .kpi{border-right:0;padding-left:0}
+[data-style=minimal] .kpi b{font-size:28px}
+[data-style=minimal] .box,[data-style=minimal] .loan,[data-style=minimal] #gate{border:1px solid var(--line);border-radius:10px}
+[data-style=minimal] .loan.behind{border-color:var(--mag);background:var(--card)}
+[data-style=minimal] th{text-transform:none;letter-spacing:0;font-size:12.5px;color:var(--mute);border-bottom:1px solid var(--line)}
+[data-style=minimal] .g0,[data-style=minimal] .g1,[data-style=minimal] .g2,[data-style=minimal] .g3,[data-style=minimal] .g4,[data-style=minimal] .g5{--rowbg:transparent}
+[data-style=minimal] .mtab{border-spacing:0}[data-style=minimal] .mtab tbody td{border-left:0!important;border-right:0!important;border-top:0}
+[data-style=minimal] button{background:var(--ink);color:var(--bg);border-color:var(--ink);border-radius:8px}
+[data-style=minimal] .chip,[data-style=minimal] .dl{background:transparent;color:var(--ink);border-color:var(--line)}
+[data-style=minimal] .chip.behind{color:var(--mag);background:transparent}
+[data-style=minimal] .chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+[data-style=minimal] tr.tot td{border-bottom:1px solid var(--line);border-top:1px solid var(--ink)}
+[data-style=minimal] select,[data-style=minimal] input{border-radius:8px;border-color:var(--line)}
+
 #gate{max-width:430px;margin:32px auto;text-align:center;background:var(--card);border:1px solid var(--line);border-top:2px solid var(--hair);padding:36px 30px}
 #gate svg{width:84px;height:auto;margin-bottom:12px}
 #gate h2::after{margin-inline:auto}
 pre,.scroll{overflow-x:auto}
 @media(max-width:600px){.route{grid-template-columns:6.5em minmax(0,1fr) 6.5em;font-size:14px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:12px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;white-space:normal;color:var(--gold);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}.stack td:empty{display:none}.stack tr.tot{border-top:1px solid var(--hair);border-bottom:3px double var(--hair)}.mlab span{font-size:10px}.mtab{border-spacing:0}.mtab tbody tr{border:1px solid light-dark(#d4d5d0,#2a3d31);background:var(--rowbg);padding:12px 14px;margin-bottom:8px}.mtab tbody td{border:0;background:transparent}.scroll th,.scroll td{padding:9px 7px}.mtab tbody tr.tot{background:transparent;border-width:1px 0 3px;border-style:solid double;border-color:var(--hair)}}
 </style><script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script></head><body>
+<div id="stylebar" role="group" aria-label="Choose a page style"><span>Pick a look for the group:</span><button type="button" data-s="app">1 · App</button><button type="button" data-s="banking">2 · Banking</button><button type="button" data-s="bank">3 · Private bank</button><button type="button" data-s="minimal">4 · Minimal</button></div>
 <header class="band"><div class="wrap">
 <div class="top"><div class="brand"><svg viewBox="0 0 240 240" role="img" aria-label="Pennyvale Electrosoft crest"><path d="M120 12 L208 40 V112 C208 170 170 206 120 228 C70 206 32 170 32 112 V40 Z" fill="#0E4D2C" stroke="#D4B266" stroke-width="5" stroke-linejoin="round"/><path d="M120 26 L194 50 V112 C194 160 162 192 120 212 C78 192 46 160 46 112 V50 Z" fill="none" stroke="#C8A13A" stroke-width="3"/><text x="102" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="104" fill="#FFFFFF">P</text><text x="142" y="166" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="84" fill="#C8A13A">E</text><path d="M74 186 H166" stroke="#C8A13A" stroke-width="3"/></svg><div><div class="co">PENNYVALE ELECTROSOFT LTD</div><h1>Quick Cash statement</h1></div></div>
 <button id="theme" type="button" aria-label="Switch light or dark mode">Dark</button></div>
@@ -182,6 +253,7 @@ function calc(L){
 }
 const C=LOANS.map(calc);
 const ST={behind:['Behind','t-behind'],ok:['On track','t-ok'],ahead:['Ahead','t-ahead'],done:['Paid off','t-done']};
+const rateTxt=c=>c.n>12?'10% a year (year 2 on remaining balance)':'10% interest';
 const tag=s=>`<span class="tag ${ST[s][1]}">${ST[s][0]}</span>`;
 
 // group by member
@@ -227,7 +299,7 @@ function showWho(){
  document.getElementById('loans').innerHTML=ls.map(c=>{
   const pct=Math.min(100,c.paid/(c.T+c.pen)*100), epct=Math.min(100,c.req/c.T*100);
   return `<div class="loan ${c.status==="behind"?"behind":""}"><h3>${c.name} · Loan #${c.no} ${tag(c.status)}</h3>
-  <div class="sub">Sheet #${c.sheet} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months at ${(c.I/c.P*100).toFixed(0)}% total interest · last instalment ${c.endM}</div>
+  <div class="sub">Sheet #${c.sheet} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months · ${rateTxt(c)} · last instalment ${c.endM}</div>
   <button type="button" class="dl" data-loan="${c.id}">Download statement (PDF)</button>
   <div class="facts">
    <div>Advanced<b>${K(c.P)}</b></div><div>Principal + interest<b>${K(c.T)}</b></div><div>Monthly instalment<b>${K(c.inst)}</b></div>
@@ -263,7 +335,7 @@ async function statement(c,btn){
  const st={behind:'Behind',ok:'On track',ahead:'Ahead',done:'Paid off'}[c.status];
  doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...(c.status==='behind'?RED:c.status==='ok'?MU:[46,107,71]));doc.text(st.toUpperCase(),W-14,y,{align:'right'});
  y+=6;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...MU);
- doc.text(`Sheet #${c.sheet}  ·  issued ${c.date.split('-').reverse().join('/')}  ·  ${c.n} months  ·  ${(c.I/c.P*100).toFixed(0)}% total interest  ·  last instalment ${c.endM}`,14,y);
+ doc.text(`Sheet #${c.sheet}  ·  issued ${c.date.split('-').reverse().join('/')}  ·  ${c.n} months  ·  ${rateTxt(c)}  ·  last instalment ${c.endM}`,14,y);
  y+=6;
  const f=[['Advanced',K(c.P)],['Principal + interest',K(c.T)],['Monthly instalment',K(c.inst)],['Paid so far',K(c.paid)],['Penalties charged',K(c.pen)],['Outstanding',K(c.out)],[c.over>=0?'Overdue':'Paid ahead',K(Math.abs(c.over))],[`Months ${c.over>=0?'behind':'ahead'}`,(Math.abs(c.over)/c.inst).toFixed(1)],['Interest earned by pool',K(c.intEarned)]];
  const rows=[];for(let i=0;i<f.length;i+=3)rows.push(f.slice(i,i+3).flat());
@@ -339,6 +411,14 @@ let saved='';try{saved=localStorage.getItem('es-theme')||''}catch(e){}
 if(saved)root.dataset.theme=saved;
 label();
 btn.addEventListener('click',()=>{const n=cur()==='dark'?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('es-theme',n)}catch(e){}label()});
+}
+
+{
+const root=document.documentElement,bar=document.getElementById('stylebar');
+let s='bank';try{s=localStorage.getItem('es-style')||'bank'}catch(e){}
+const set=v=>{root.dataset.style=v;bar.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.s===v))};
+set(s);
+bar.addEventListener('click',e=>{const b=e.target.closest('button[data-s]');if(!b)return;set(b.dataset.s);try{localStorage.setItem('es-style',b.dataset.s)}catch(e){}});
 }
 
 var ENC={"s":"3arbvAWWhJ2agLiT1zQRJw==","i":"5oTlK5hgLGUyLBhx","c":"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","n":600000};
