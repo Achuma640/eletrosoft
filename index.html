@@ -165,6 +165,10 @@ section[hidden],nav[hidden]{display:none}
 .stripcap{display:flex;justify-content:space-between;max-width:520px;font-size:11.5px;color:var(--mute)}
 .slegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mute);margin:8px 0 4px}
 .slegend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:var(--due)}
+.ringnote{display:flex;gap:10px;align-items:flex-start;margin-top:14px}
+.ringnote .rk{flex:none;width:16px;height:16px;border-radius:50%;border:3px solid;border-right-color:var(--due);border-bottom-color:var(--due);margin-top:2px}
+.ringcap{display:flex;flex-direction:column;align-items:center;gap:2px;flex:none}
+.ringcap span{font-size:10.5px;color:var(--mute);white-space:nowrap}
 /* ---- prominent tabs (all styles) ---- */
 nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:24px;border-top:1px solid rgba(212,178,102,.35)}
 nav a{display:flex;align-items:center;justify-content:center;gap:9px;padding:14px 6px 15px;font-size:16px;font-weight:600;letter-spacing:.01em;color:#e7ece8;border-bottom:3px solid transparent;text-align:center;line-height:1.2}
@@ -287,7 +291,8 @@ pre,.scroll{overflow-x:auto}
 <div class="box"><h2>Pool health</h2><div class="pool" id="pool"></div><div class="util" id="util"></div><p class="note" id="poolnote" style="margin-top:4px"></p></div>
 <div class="box"><h2>Where each member stands</h2>
 <div class="legend"><span><i class="c-paid"></i>Repaid</span><span><i class="c-due"></i>Not yet due</span><span><i class="c-arr"></i>Overdue</span><span><i class="c-pen"></i>Penalties</span></div>
-<div id="routes"></div></div>
+<div id="routes"></div>
+<p class="note ringnote"><span class="rk" style="border-color:var(--ok)"></span>Each circle shows how much of the member's loan has been repaid so far: a full circle means fully repaid. Green = on track or ahead, red = behind, gold = cleared.</p></div>
 <div class="box"><h2>Loans summary by member</h2>
 <div><table class="stack mtab"><thead><tr><th>Member</th><th>Issued</th><th>Repayable</th><th>Paid</th><th>Outstanding</th><th>Overdue</th><th>Months behind</th><th>Interest earned</th><th>Status</th></tr></thead><tbody id="sumtb"></tbody></table></div>
 <p class="note">Overdue = instalments due up to the last completed month minus what has been paid (penalties shown separately). Payments are due by the last day of each month.</p></div>
@@ -440,7 +445,7 @@ function showWho(){
  document.getElementById('loans').innerHTML=ls.map(c=>{
   const pct=Math.min(100,c.paid/(c.T+c.pen)*100), epct=Math.min(100,c.req/c.T*100);
   return `<div class="loan ${c.status==="behind"?"behind":""}"><div class="loanhead"><div><h3>${c.name} · Loan #${c.no} ${c.done?seal:tag(c.status)}</h3>
-  <div class="sub">Issued ${c.date.split('-').reverse().join('/')} · ${c.n} months · ${rateTxt(c)} · last instalment ${c.endM}</div></div>${ring(pctRepaid(c),76,ringCol(c.status))}</div>
+  <div class="sub">Issued ${c.date.split('-').reverse().join('/')} · ${c.n} months · ${rateTxt(c)} · last instalment ${c.endM}</div></div><div class="ringcap">${ring(pctRepaid(c),76,ringCol(c.status))}<span>of loan repaid</span></div></div>
   ${strip(c)}
   <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="dl dlbig" data-loan="${c.id}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Download statement (PDF)</span></button>${c.done?`<button type="button" class="dl dl2" data-clear="${c.id}">Download clearance letter (PDF)</button>`:''}</div>
   <div class="facts">
