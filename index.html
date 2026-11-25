@@ -428,7 +428,7 @@ function showWho(){
  document.getElementById('loans').innerHTML=ls.map(c=>{
   const pct=Math.min(100,c.paid/(c.T+c.pen)*100), epct=Math.min(100,c.req/c.T*100);
   return `<div class="loan ${c.status==="behind"?"behind":""}"><div class="loanhead"><div><h3>${c.name} · Loan #${c.no} ${c.done?seal:tag(c.status)}</h3>
-  <div class="sub">Sheet #${c.sheet} · issued ${c.date.split('-').reverse().join('/')} · ${c.n} months · ${rateTxt(c)} · last instalment ${c.endM}</div></div>${ring(pctRepaid(c),76,ringCol(c.status))}</div>
+  <div class="sub">Issued ${c.date.split('-').reverse().join('/')} · ${c.n} months · ${rateTxt(c)} · last instalment ${c.endM}</div></div>${ring(pctRepaid(c),76,ringCol(c.status))}</div>
   ${strip(c)}
   <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="dl" data-loan="${c.id}">Download statement (PDF)</button>${c.done?`<button type="button" class="dl dl2" data-clear="${c.id}">Download clearance letter (PDF)</button>`:''}</div>
   <div class="facts">
@@ -465,7 +465,7 @@ async function statement(c,btn){
  const st={behind:'Behind',ok:'On track',ahead:'Ahead',done:'Paid off'}[c.status];
  doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...(c.status==='behind'?RED:c.status==='ok'?MU:[46,107,71]));doc.text(st.toUpperCase(),W-14,y,{align:'right'});
  y+=6;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...MU);
- doc.text(`Sheet #${c.sheet}  ·  issued ${c.date.split('-').reverse().join('/')}  ·  ${c.n} months  ·  ${rateTxt(c)}  ·  last instalment ${c.endM}`,14,y);
+ doc.text(`Issued ${c.date.split('-').reverse().join('/')}  ·  ${c.n} months  ·  ${rateTxt(c)}  ·  last instalment ${c.endM}`,14,y);
  y+=6;
  const f=[['Advanced',K(c.P)],['Principal + interest',K(c.T)],['Monthly instalment',K(c.inst)],['Paid so far',K(c.paid)],['Penalties charged',K(c.pen)],['Outstanding',K(c.out)],[c.over>=0?'Overdue':'Paid ahead',K(Math.abs(c.over))],[`Months ${c.over>=0?'behind':'ahead'}`,(Math.abs(c.over)/c.inst).toFixed(1)],['Interest earned by pool',K(c.intEarned)]];
  const rows=[];for(let i=0;i<f.length;i+=3)rows.push(f.slice(i,i+3).flat());
