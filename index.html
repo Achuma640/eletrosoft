@@ -226,6 +226,13 @@ nav a:hover{background:rgba(255,255,255,.05)}
 [data-style=compact] .loan td{padding:5px 3px}
 [data-style=compact] .loan tr.tot td{font-size:12px}
 @media(max-width:420px){[data-style=compact] .loan table{font-size:11.5px}[data-style=compact] .loan th,[data-style=compact] .loan td{padding:4px 2px}}
+
+.dlbig{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--green)!important;color:#fbf8ef!important;border:1px solid var(--green)!important;font-size:16px;font-weight:600;min-height:52px;padding:10px 24px;margin:16px 0 4px;box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.dlbig:hover{filter:brightness(1.12)}
+@media(max-width:600px){.dlbig{width:100%}}
+[data-style=compact] .loan th,[data-style=compact] .loan td{border-left:1px solid light-dark(rgba(0,0,0,.07),rgba(255,255,255,.08))}
+[data-style=compact] .loan th:first-child,[data-style=compact] .loan td:first-child{border-left:0}
+[data-style=compact] .loan th:nth-child(3),[data-style=compact] .loan td:nth-child(3){text-align:center}
 /* ---- 4 MINIMAL ---- */
 [data-style=minimal]{--bg:light-dark(#ffffff,#0d0f0e);--card:light-dark(#ffffff,#121514);--hair:var(--line);--gold:var(--mute);--paid:light-dark(#1a1a1a,#e6e6e6);--brown:light-dark(#9a9a9a,#8a8a8a);--due:light-dark(#efefef,#222)}
 [data-style=minimal] h1,[data-style=minimal] h2,[data-style=minimal] h3,[data-style=minimal] .kpi b,[data-style=minimal] .facts b{font-family:Inter,system-ui,sans-serif;font-weight:600;letter-spacing:-.015em}
@@ -435,7 +442,7 @@ function showWho(){
   return `<div class="loan ${c.status==="behind"?"behind":""}"><div class="loanhead"><div><h3>${c.name} · Loan #${c.no} ${c.done?seal:tag(c.status)}</h3>
   <div class="sub">Issued ${c.date.split('-').reverse().join('/')} · ${c.n} months · ${rateTxt(c)} · last instalment ${c.endM}</div></div>${ring(pctRepaid(c),76,ringCol(c.status))}</div>
   ${strip(c)}
-  <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="dl" data-loan="${c.id}">Download statement (PDF)</button>${c.done?`<button type="button" class="dl dl2" data-clear="${c.id}">Download clearance letter (PDF)</button>`:''}</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="dl dlbig" data-loan="${c.id}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Download statement (PDF)</span></button>${c.done?`<button type="button" class="dl dl2" data-clear="${c.id}">Download clearance letter (PDF)</button>`:''}</div>
   <div class="facts">
    <div>Advanced<b>${K(c.P)}</b></div><div>Principal + interest<b>${K(c.T)}</b></div><div>Monthly instalment<b>${K(c.inst)}</b></div>
    <div>Paid so far<b>${K(c.paid)}</b></div><div>Penalties<b>${K(c.pen)}</b></div><div>Outstanding<b>${K(c.out)}</b></div>
