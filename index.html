@@ -221,18 +221,18 @@ nav a:hover{background:rgba(255,255,255,.05)}
 [data-style=compact] .stack tr.tot td:first-child{font-weight:600}
 [data-style=compact] nav a{padding:9px 4px;font-size:13px}[data-style=compact] nav a svg{width:20px;height:20px}
 [data-style=compact] .loanhead .ring{width:52px;height:52px}}
-[data-style=compact] .loan table{font-size:12px;table-layout:auto}
-[data-style=compact] .loan th{white-space:normal;font-size:10.5px;line-height:1.2;padding:5px 3px;vertical-align:bottom}
-[data-style=compact] .loan td{padding:5px 3px}
-[data-style=compact] .loan tr.tot td{font-size:12px}
-@media(max-width:420px){[data-style=compact] .loan table{font-size:11.5px}[data-style=compact] .loan th,[data-style=compact] .loan td{padding:4px 2px}}
+.loan .scroll table{font-size:13px;table-layout:auto}
+.loan .scroll th{white-space:normal;line-height:1.2;vertical-align:bottom;padding:7px 6px;text-transform:none;letter-spacing:0;font-size:11px}
+.loan .scroll td{padding:7px 6px}
+@media(max-width:600px){.loan{padding:14px 12px}.loan .scroll table{font-size:12px}.loan .scroll th,.loan .scroll td{padding:5px 3px}.loan .scroll tr.tot td{font-size:12px}.loan .scroll th{font-size:10.5px}}
+@media(max-width:420px){.loan .scroll table{font-size:11.5px}.loan .scroll th,.loan .scroll td{padding:4px 2px}}
 
 .dlbig{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--green)!important;color:#fbf8ef!important;border:1px solid var(--green)!important;font-size:16px;font-weight:600;min-height:52px;padding:10px 24px;margin:16px 0 4px;box-shadow:0 2px 0 rgba(0,0,0,.12)}
 .dlbig:hover{filter:brightness(1.12)}
 @media(max-width:600px){.dlbig{width:100%}}
-[data-style=compact] .loan th,[data-style=compact] .loan td{border-left:1px solid light-dark(rgba(0,0,0,.07),rgba(255,255,255,.08))}
-[data-style=compact] .loan th:first-child,[data-style=compact] .loan td:first-child{border-left:0}
-[data-style=compact] .loan th:nth-child(3),[data-style=compact] .loan td:nth-child(3){text-align:center}
+.loan th,.loan td{border-left:1px solid light-dark(rgba(0,0,0,.07),rgba(255,255,255,.08))}
+.loan th:first-child,.loan td:first-child{border-left:0}
+.loan th:nth-child(3),.loan td:nth-child(3){text-align:center}
 /* ---- 4 MINIMAL ---- */
 [data-style=minimal]{--bg:light-dark(#ffffff,#0d0f0e);--card:light-dark(#ffffff,#121514);--hair:var(--line);--gold:var(--mute);--paid:light-dark(#1a1a1a,#e6e6e6);--brown:light-dark(#9a9a9a,#8a8a8a);--due:light-dark(#efefef,#222)}
 [data-style=minimal] h1,[data-style=minimal] h2,[data-style=minimal] h3,[data-style=minimal] .kpi b,[data-style=minimal] .facts b{font-family:Inter,system-ui,sans-serif;font-weight:600;letter-spacing:-.015em}
