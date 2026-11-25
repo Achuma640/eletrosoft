@@ -187,6 +187,40 @@ nav a:hover{background:rgba(255,255,255,.05)}
 [data-style=banking] nav a{background:transparent;color:#c9d6cd;border-radius:12px;margin:4px}
 [data-style=banking] nav a.on{background:rgba(212,178,102,.16);color:#d4b266}
 [data-style=banking] body{padding-bottom:96px}}
+
+/* ---- 5 COMPACT ---- */
+[data-style=compact] h1,[data-style=compact] h2,[data-style=compact] h3,[data-style=compact] .kpi b,[data-style=compact] .facts b,[data-style=compact] .pool b,[data-style=compact] .duebar .d{font-family:Inter,system-ui,sans-serif;font-weight:600;letter-spacing:-.01em}
+[data-style=compact] h1{font-size:clamp(24px,4vw,32px)}[data-style=compact] h2{font-size:17px}[data-style=compact] h3{font-size:18px}
+[data-style=compact] .band{padding-top:clamp(16px,3vw,32px);padding-bottom:clamp(16px,3vw,32px)}
+[data-style=compact] header.band{padding-bottom:0}
+[data-style=compact] .box,[data-style=compact] .loan{padding:14px;margin-bottom:16px;border-radius:12px;border-top-width:1px}
+[data-style=compact] .loan.behind{border-color:var(--mag)}
+[data-style=compact] .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border:0;margin-bottom:16px}
+[data-style=compact] .kpi{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card)}
+[data-style=compact] .kpi b{font-size:20px}[data-style=compact] .kpi span{font-size:12px}
+[data-style=compact] .facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:12px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+[data-style=compact] .facts div{font-size:11px;line-height:1.3;padding:8px 9px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+[data-style=compact] .facts div:nth-child(3n){border-right:0}[data-style=compact] .facts div:nth-child(n+7){border-bottom:0}
+[data-style=compact] .facts b{font-size:16px;margin-top:2px;white-space:nowrap}
+[data-style=compact] .loan>.bar,[data-style=compact] .loan>.bar+.note{display:none}
+[data-style=compact] .loanhead .ring{width:58px;height:58px}
+[data-style=compact] .sub{font-size:13px}
+[data-style=compact] .strip{gap:4px;margin:10px 0 2px}[data-style=compact] .slegend{font-size:11px;gap:4px 10px}
+[data-style=compact] .duebar{padding:10px 14px;margin-bottom:16px;border-radius:12px}[data-style=compact] .duebar .d{font-size:24px}
+[data-style=compact] .pool{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}[data-style=compact] .pool b{font-size:18px}
+[data-style=compact] .chip,[data-style=compact] button{border-radius:10px}
+[data-style=compact] th{text-transform:none;letter-spacing:0;font-size:12px;color:var(--mute);border-bottom:1px solid var(--line)}
+[data-style=compact] th,[data-style=compact] td{padding:7px 6px}
+[data-style=compact] h2::after{display:none}
+[data-style=compact] .route{padding:7px 0}
+@media(max-width:600px){
+[data-style=compact] .stack tr{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 8px;padding:10px 12px}
+[data-style=compact] .stack td{padding:0;font-size:13.5px;font-weight:500}
+[data-style=compact] .stack td::before{float:none;display:block;width:auto;margin:0 0 1px;font-size:10px;font-weight:400}
+[data-style=compact] .stack td:first-child{grid-column:1/-1;font-size:15px}[data-style=compact] .stack td:first-child::before{display:none}
+[data-style=compact] .stack tr.tot td:first-child{font-weight:600}
+[data-style=compact] nav a{padding:9px 4px;font-size:13px}[data-style=compact] nav a svg{width:20px;height:20px}
+[data-style=compact] .loanhead .ring{width:52px;height:52px}}
 /* ---- 4 MINIMAL ---- */
 [data-style=minimal]{--bg:light-dark(#ffffff,#0d0f0e);--card:light-dark(#ffffff,#121514);--hair:var(--line);--gold:var(--mute);--paid:light-dark(#1a1a1a,#e6e6e6);--brown:light-dark(#9a9a9a,#8a8a8a);--due:light-dark(#efefef,#222)}
 [data-style=minimal] h1,[data-style=minimal] h2,[data-style=minimal] h3,[data-style=minimal] .kpi b,[data-style=minimal] .facts b{font-family:Inter,system-ui,sans-serif;font-weight:600;letter-spacing:-.015em}
@@ -218,7 +252,7 @@ nav a:hover{background:rgba(255,255,255,.05)}
 pre,.scroll{overflow-x:auto}
 @media(max-width:600px){.route{grid-template-columns:6.5em minmax(0,1fr) 6.5em;font-size:14px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:12px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;white-space:normal;color:var(--gold);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}.stack td:empty{display:none}.stack tr.tot{border-top:1px solid var(--hair);border-bottom:3px double var(--hair)}.mlab span{font-size:10px}.mtab{border-spacing:0}.mtab tbody tr{border:1px solid light-dark(#d4d5d0,#2a3d31);background:var(--rowbg);padding:12px 14px;margin-bottom:8px}.mtab tbody td{border:0;background:transparent}.scroll th,.scroll td{padding:9px 7px}.mtab tbody tr.tot{background:transparent;border-width:1px 0 3px;border-style:solid double;border-color:var(--hair)}}
 </style><script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script></head><body>
-<div id="stylebar" role="group" aria-label="Choose a page style"><span>Pick a look for the group:</span><button type="button" data-s="app">1 · App</button><button type="button" data-s="banking">2 · Banking</button><button type="button" data-s="bank">3 · Private bank</button><button type="button" data-s="minimal">4 · Minimal</button></div>
+<div id="stylebar" role="group" aria-label="Choose a page style"><span>Pick a look for the group:</span><button type="button" data-s="app">1 · App</button><button type="button" data-s="banking">2 · Banking</button><button type="button" data-s="bank">3 · Private bank</button><button type="button" data-s="minimal">4 · Minimal</button><button type="button" data-s="compact">5 · Compact</button></div>
 <header class="band"><div class="wrap">
 <div class="top"><div class="brand"><svg viewBox="0 0 240 240" role="img" aria-label="Pennyvale Electrosoft crest"><path d="M120 12 L208 40 V112 C208 170 170 206 120 228 C70 206 32 170 32 112 V40 Z" fill="#0E4D2C" stroke="#D4B266" stroke-width="5" stroke-linejoin="round"/><path d="M120 26 L194 50 V112 C194 160 162 192 120 212 C78 192 46 160 46 112 V50 Z" fill="none" stroke="#C8A13A" stroke-width="3"/><text x="102" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="104" fill="#FFFFFF">P</text><text x="142" y="166" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="84" fill="#C8A13A">E</text><path d="M74 186 H166" stroke="#C8A13A" stroke-width="3"/></svg><div><div class="co">PENNYVALE ELECTROSOFT LTD</div><h1>Quick Cash statement</h1></div></div>
 <button id="theme" type="button" aria-label="Switch light or dark mode">Dark</button></div>
